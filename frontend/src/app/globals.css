@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-playfair: 'Playfair Display', serif;
+    --font-poppins: 'Poppins', sans-serif;
+  }
+
+  body {
+    @apply bg-[#FAF8F5] text-[#1A1A1A] font-poppins antialiased selection:bg-[#6B1D2F] selection:text-[#FAF8F5];
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-playfair tracking-tight;
+  }
+}
+
+@layer components {
+  /* Luxury Glassmorphism & Cards */
+  .glass-card {
+    @apply bg-white/80 backdrop-blur-md border border-[#E8E2D5]/60 shadow-sm transition-all duration-300 hover:shadow-luxury;
+  }
+
+  .glass-navbar {
+    @apply bg-[#FAF8F5]/90 backdrop-blur-lg border-b border-[#E8E2D5]/70 sticky top-0 z-50 transition-all duration-300;
+  }
+
+  /* Premium Buttons */
+  .btn-primary {
+    @apply relative inline-flex items-center justify-center px-8 py-3.5 bg-[#6B1D2F] text-[#FAF8F5] font-medium tracking-wide rounded-sm overflow-hidden transition-all duration-300 hover:bg-[#4A121F] shadow-md hover:shadow-luxury active:scale-[0.98];
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center px-8 py-3.5 bg-transparent border border-[#6B1D2F] text-[#6B1D2F] font-medium tracking-wide rounded-sm transition-all duration-300 hover:bg-[#6B1D2F] hover:text-[#FAF8F5] active:scale-[0.98];
+  }
+
+  .btn-gold {
+    @apply inline-flex items-center justify-center px-8 py-3.5 bg-gradient-to-r from-[#D4AF37] to-[#B8962D] text-[#1A1A1A] font-semibold tracking-wide rounded-sm transition-all duration-300 hover:brightness-110 shadow-gold active:scale-[0.98];
+  }
+
+  /* Typography Utilities */
+  .heading-luxury {
+    @apply font-playfair text-3xl md:text-5xl font-bold text-[#1A1A1A] leading-tight;
+  }
+
+  .subheading-luxury {
+    @apply font-poppins text-xs md:text-sm uppercase tracking-[0.25em] text-[#6B1D2F] font-semibold;
+  }
+
+  /* Shimmer animation for promotional tags */
+  .shimmer-gold {
+    background: linear-gradient(90deg, #D4AF37 0%, #FAF8F5 50%, #D4AF37 100%);
+    background-size: 200% auto;
+    color: #1A1A1A;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shine 3s linear infinite;
+  }
+}
+
+@keyframes shine {
+  to {
+    background-position: 200% center;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #FAF8F5;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #C5B8A5;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6B1D2F;
+}
