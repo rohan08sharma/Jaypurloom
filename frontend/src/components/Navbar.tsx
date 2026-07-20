@@ -58,7 +58,7 @@ export const Navbar = () => {
         }`}
       >
         <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6 w-full">
-          <div className="flex items-center justify-between h-16 sm:h-20 gap-1.5 sm:gap-3 lg:gap-4 w-full min-w-0">
+          <div className="flex items-center justify-between h-16 sm:h-20 gap-1 sm:gap-2.5 xl:gap-3 2xl:gap-4 w-full min-w-0">
             {/* Mobile/Tablet Menu Toggle & AI Stylist Button (< xl viewports) */}
             <div className="flex items-center gap-1 sm:gap-2 xl:hidden flex-shrink-0">
               <button
@@ -90,21 +90,21 @@ export const Navbar = () => {
                 <span className="font-playfair text-base sm:text-xl lg:text-2xl font-bold tracking-[0.01em] text-[#6B1D2F] group-hover:text-[#4A121F] transition-colors truncate">
                   Jaypurloom
                 </span>
-                <span className="hidden lg:block font-poppins text-[8px] uppercase tracking-[0.25em] text-[#D4AF37] font-semibold -mt-0.5 truncate">
+                <span className="hidden 2xl:block font-poppins text-[8px] uppercase tracking-[0.25em] text-[#D4AF37] font-semibold -mt-0.5 truncate">
                   Jaipur Heritage & Home
                 </span>
               </div>
             </Link>
 
             {/* Desktop Navigation Menu (Mega Menu Support on xl+) */}
-            <nav className="hidden xl:flex items-center gap-4 xl:gap-6 font-poppins text-xs font-semibold text-[#1A1A1A] whitespace-nowrap flex-shrink-0">
+            <nav className="hidden xl:flex items-center gap-3 xl:gap-3.5 2xl:gap-6 font-poppins text-[11px] 2xl:text-xs font-semibold text-[#1A1A1A] whitespace-nowrap flex-shrink-0">
               {/* Women's Ethnic Wear Mega Dropdown */}
               <div
                 className="relative py-7 group"
                 onMouseEnter={() => setActiveMega('women')}
                 onMouseLeave={() => setActiveMega(null)}
               >
-                <button className="flex items-center gap-1 hover:text-[#6B1D2F] transition-colors uppercase tracking-wider text-xs font-semibold">
+                <button className="flex items-center gap-1 hover:text-[#6B1D2F] transition-colors uppercase tracking-wider font-semibold">
                   <span>Women&apos;s Suit Sets</span>
                   <ChevronDown className={`w-3.5 h-3.5 text-[#6B1D2F] transition-transform duration-200 ${activeMega === 'women' ? 'rotate-180' : ''}`} />
                 </button>
@@ -198,7 +198,7 @@ export const Navbar = () => {
                 onMouseEnter={() => setActiveMega('home')}
                 onMouseLeave={() => setActiveMega(null)}
               >
-                <button className="flex items-center gap-1 hover:text-[#6B1D2F] transition-colors uppercase tracking-wider text-xs font-semibold">
+                <button className="flex items-center gap-1 hover:text-[#6B1D2F] transition-colors uppercase tracking-wider font-semibold">
                   <span>Home Furnishing</span>
                   <ChevronDown className={`w-3.5 h-3.5 text-[#6B1D2F] transition-transform duration-200 ${activeMega === 'home' ? 'rotate-180' : ''}`} />
                 </button>
@@ -246,32 +246,33 @@ export const Navbar = () => {
 
               <Link
                 href="/shop?isNewArrival=true"
-                className="hover:text-[#6B1D2F] transition-colors uppercase tracking-wider text-xs font-semibold"
+                className="hover:text-[#6B1D2F] transition-colors uppercase tracking-wider font-semibold"
               >
                 New Arrivals ✨
               </Link>
 
               <Link
                 href="/about"
-                className="hover:text-[#6B1D2F] transition-colors uppercase tracking-wider text-xs font-semibold"
+                className="hover:text-[#6B1D2F] transition-colors uppercase tracking-wider font-semibold"
               >
                 Our Heritage
               </Link>
             </nav>
 
             {/* Actions Bar (Search, Wishlist, Cart, Persistent Login/User CTA) */}
-            <div className="flex items-center gap-1 sm:gap-2 lg:gap-3 flex-shrink-0 min-w-0">
+            <div className="flex items-center gap-1 sm:gap-2 lg:gap-2.5 2xl:gap-3 flex-shrink-0 min-w-0">
               {/* Ask AI Stylist Button (Desktop xl+) */}
               <button
                 onClick={() => setAiModalOpen(true)}
-                className="hidden xl:flex items-center gap-1 px-2.5 py-1.5 bg-gradient-to-r from-[#D4AF37]/20 to-amber-100/40 border border-[#D4AF37] text-[#6B1D2F] rounded-full text-xs font-bold tracking-wide hover:bg-[#D4AF37] hover:text-[#1A1A1A] transition-all shadow-sm whitespace-nowrap flex-shrink-0"
+                className="hidden xl:flex items-center gap-1 px-2.5 py-1.5 bg-gradient-to-r from-[#D4AF37]/20 to-amber-100/40 border border-[#D4AF37] text-[#6B1D2F] rounded-full text-[11px] 2xl:text-xs font-bold tracking-wide hover:bg-[#D4AF37] hover:text-[#1A1A1A] transition-all shadow-sm whitespace-nowrap flex-shrink-0"
               >
                 <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
-                <span>AI Stylist</span>
+                <span className="font-bold">AI</span>
+                <span className="hidden 2xl:inline"> Stylist</span>
               </button>
 
               {/* Quick Search (Desktop lg+) */}
-              <div className="relative hidden lg:block w-24 xl:w-36 2xl:w-48 flex-shrink">
+              <div className="relative hidden lg:block w-24 xl:w-28 2xl:w-44 flex-shrink">
                 <input
                   type="text"
                   value={searchQuery}
@@ -329,19 +330,19 @@ export const Navbar = () => {
                 {!user ? (
                   <Link
                     href="/account"
-                    className="inline-flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-[#6B1D2F] text-[#FAF8F5] hover:bg-[#4A121F] hover:shadow-md transition-all shadow text-[11px] sm:text-xs font-bold whitespace-nowrap flex-shrink-0 border border-[#D4AF37]/50"
+                    className="inline-flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-[#6B1D2F] text-[#FAF8F5] hover:bg-[#4A121F] hover:shadow-md transition-all shadow text-[11px] sm:text-xs font-bold whitespace-nowrap flex-shrink-0 border border-[#D4AF37]/50"
                     aria-label="Login or Sign Up"
                   >
                     <UserIcon className="w-3.5 h-3.5 text-[#D4AF37] flex-shrink-0" />
                     <span className="font-poppins tracking-wide block">
-                      <span className="xs:hidden sm:inline">Login / Sign Up</span>
-                      <span className="hidden xs:inline sm:hidden">Login</span>
+                      <span className="hidden sm:inline">Login / Sign Up</span>
+                      <span className="sm:hidden">Login</span>
                     </span>
                   </Link>
                 ) : (
                   <Link
                     href="/account"
-                    className="inline-flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-[#1A1A1A] text-[#D4AF37] hover:bg-[#6B1D2F] hover:text-white transition-all shadow text-[11px] sm:text-xs font-bold whitespace-nowrap flex-shrink-0 border border-[#D4AF37]/40"
+                    className="inline-flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-[#1A1A1A] text-[#D4AF37] hover:bg-[#6B1D2F] hover:text-white transition-all shadow text-[11px] sm:text-xs font-bold whitespace-nowrap flex-shrink-0 border border-[#D4AF37]/40"
                     aria-label="Customer Account Sanctuary"
                   >
                     <UserIcon className="w-3.5 h-3.5 text-[#D4AF37] flex-shrink-0" />
