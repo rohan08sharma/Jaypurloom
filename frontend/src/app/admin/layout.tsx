@@ -81,8 +81,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           {/* Header */}
           <div className="p-6 border-b border-white/10 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="bg-white/95 p-1 rounded shadow">
-                <img src="/logo.jpg" alt="Jaypurloom Logo" className="h-10 w-auto object-contain mix-blend-multiply" />
+              <div className="bg-[#FAF8F5] p-1 rounded shadow">
+                <img src="/logo.png" alt="Jaypurloom Logo" className="h-10 w-auto object-contain" />
               </div>
               <div>
                 <Link href="/" className="font-playfair text-xl font-bold tracking-widest text-[#D4AF37]">
