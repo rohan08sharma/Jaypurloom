@@ -180,56 +180,34 @@ export const Navbar = () => {
                         />
                       </div>
                       <p className="font-playfair text-xs font-bold text-[#6B1D2F]">Royal Maroon Zari Anarkali</p>
-                  <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${megaMenuOpen ? 'rotate-180' : ''}`} />
-                </button>
-
-                {/* Mega Menu Dropdown */}
-                {megaMenuOpen && (
-                  <div className="absolute top-full left-0 w-64 bg-[#FAF8F5] border border-[#E8E2D5] rounded shadow-luxury p-4 z-50 animate-fadeIn">
-                    <p className="text-[10px] font-bold uppercase tracking-widest text-[#D4AF37] mb-2 border-b border-[#E8E2D5] pb-1">
-                      Explore By Craft
-                    </p>
-                    <ul className="space-y-2 text-xs">
-                      <li>
-                        <Link href="/shop?category=anarkali-suits" className="block hover:text-[#6B1D2F] transition-colors">
-                          Royal Anarkali Suits
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="/shop?category=cotton-suit-sets" className="block hover:text-[#6B1D2F] transition-colors">
-                          Sanganeri Cotton Sets
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="/shop?category=kurta-sets" className="block hover:text-[#6B1D2F] transition-colors">
-                          Kurta Sets & Palazzos
-                        </Link>
-                      </li>
-                    </ul>
+                      <Link
+                        href="/product/royal-maroon-zari-anarkali-suit"
+                        className="mt-1 text-[11px] font-poppins font-bold bg-[#6B1D2F] text-[#FAF8F5] py-1 rounded hover:bg-[#4A121F] block"
+                      >
+                        Shop Suit Set
+                      </Link>
+                    </div>
                   </div>
                 )}
               </div>
 
+              {/* Home Furnishing Dropdown */}
               <div
-                className="relative group py-2"
-                onMouseEnter={() => setHomeFurnishingMenuOpen(true)}
-                onMouseLeave={() => setHomeFurnishingMenuOpen(false)}
+                className="relative py-7 group"
+                onMouseEnter={() => setActiveMega('home')}
+                onMouseLeave={() => setActiveMega(null)}
               >
-                <button
-                  className="flex items-center gap-1 hover:text-[#6B1D2F] transition-colors py-1 uppercase tracking-wider font-semibold"
-                  aria-expanded={homeFurnishingMenuOpen}
-                >
+                <button className="flex items-center gap-1 hover:text-[#6B1D2F] transition-colors uppercase tracking-wider text-xs font-semibold">
                   <span>Home Furnishing</span>
-                  <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${homeFurnishingMenuOpen ? 'rotate-180' : ''}`} />
+                  <ChevronDown className={`w-3.5 h-3.5 text-[#6B1D2F] transition-transform duration-200 ${activeMega === 'home' ? 'rotate-180' : ''}`} />
                 </button>
 
-                {/* Home Furnishing Dropdown */}
-                {homeFurnishingMenuOpen && (
-                  <div className="absolute top-full left-0 w-72 bg-[#FAF8F5] border border-[#E8E2D5] rounded shadow-luxury p-4 z-50 animate-fadeIn">
+                {activeMega === 'home' && (
+                  <div className="absolute top-full left-0 w-72 bg-[#FAF8F5] border border-[#D4AF37]/40 rounded shadow-2xl p-4 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
                     <p className="text-[10px] font-bold uppercase tracking-widest text-[#D4AF37] mb-2 border-b border-[#E8E2D5] pb-1">
                       Luxury Jaipur Bedding
                     </p>
-                    <ul className="space-y-2.5 text-xs">
+                    <ul className="space-y-2.5 text-xs text-[#1A1A1A]">
                       <li>
                         <Link href="/shop?category=king-size-bedsheets" className="block hover:text-[#6B1D2F] transition-colors font-medium">
                           👑 King Size Bedsheets (300 TC Percale)
@@ -255,7 +233,7 @@ export const Navbar = () => {
                         <p className="font-playfair text-xs font-bold text-[#6B1D2F]">Maharaja Palace 300 TC Sheet</p>
                         <Link
                           href="/product/maharaja-palace-300-tc-king-size-percale-bedsheet"
-                          className="mt-1 text-[11px] font-poppins font-bold bg-[#6B1D2F] text-[#FAF8F5] py-1 rounded hover:bg-[#4A121F]"
+                          className="mt-1 text-[11px] font-poppins font-bold bg-[#6B1D2F] text-[#FAF8F5] py-1 rounded hover:bg-[#4A121F] block"
                         >
                           Shop Bedsheet
                         </Link>
