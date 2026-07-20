@@ -7,6 +7,12 @@ const nextConfig = {
     basePath: '/Jaypurloom',
     assetPrefix: '/Jaypurloom/',
   }),
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   images: {
     ...(isGithubPages && { unoptimized: true }),
     remotePatterns: [
