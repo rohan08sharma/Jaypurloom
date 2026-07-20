@@ -59,8 +59,8 @@ export const Navbar = () => {
       >
         <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6 w-full">
           <div className="flex items-center justify-between h-16 sm:h-20 gap-1 sm:gap-2 lg:gap-3 w-full min-w-0">
-            {/* LEFT COLUMN: Mobile/Tablet Menu OR Desktop Navigation Sub Options on Top Left */}
-            <div className="flex items-center gap-1.5 sm:gap-2.5 lg:gap-3 xl:gap-4 flex-1 justify-start min-w-0">
+            {/* LEFT COLUMN: Brand Logo & Mobile/Tablet Toggle */}
+            <div className="flex items-center gap-1.5 sm:gap-2 lg:gap-3 flex-shrink-0 min-w-0">
               {/* Mobile/Tablet Toggle (< lg viewports) */}
               <div className="flex items-center gap-1 sm:gap-2 lg:hidden flex-shrink-0">
                 <button
@@ -80,8 +80,27 @@ export const Navbar = () => {
                 </button>
               </div>
 
-              {/* Desktop Navigation Sub Options on Left Top Corner (lg+ viewports) */}
-              <nav className="hidden lg:flex items-center gap-2 lg:gap-2.5 xl:gap-3.5 2xl:gap-5 font-poppins text-[10.5px] xl:text-[11px] 2xl:text-xs font-semibold text-[#1A1A1A] whitespace-nowrap flex-shrink-0">
+              {/* Brand Logo & Brandname on the Left */}
+              <Link href="/" className="flex items-center gap-1.5 sm:gap-2.5 group py-1 min-w-0 flex-shrink-0">
+                <img
+                  src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/logo.png`}
+                  alt="Jaypurloom Brand Logo"
+                  className="h-8 sm:h-11 lg:h-12 w-auto object-contain flex-shrink-0 transition-transform duration-300 group-hover:scale-105"
+                />
+                <div className="flex flex-col items-start justify-center min-w-0">
+                  <span className="font-playfair text-base sm:text-xl lg:text-2xl font-bold tracking-[0.01em] text-[#6B1D2F] group-hover:text-[#4A121F] transition-colors truncate">
+                    Jaypurloom
+                  </span>
+                  <span className="hidden 2xl:block font-poppins text-[8px] uppercase tracking-[0.25em] text-[#D4AF37] font-semibold -mt-0.5 truncate">
+                    Jaipur Heritage & Home
+                  </span>
+                </div>
+              </Link>
+            </div>
+
+            {/* CENTER COLUMN: Navigation Sub Options in the Center (lg+ viewports) */}
+            <div className="hidden lg:flex items-center justify-center flex-1 min-w-0 px-1 xl:px-4">
+              <nav className="flex items-center justify-center gap-2 lg:gap-3 xl:gap-5 2xl:gap-6 font-poppins text-[10.5px] xl:text-[11px] 2xl:text-xs font-semibold text-[#1A1A1A] whitespace-nowrap">
                 {/* Women's Ethnic Wear Mega Dropdown */}
                 <div
                   className="relative py-7 group"
@@ -94,7 +113,7 @@ export const Navbar = () => {
                   </button>
 
                   {activeMega === 'women' && (
-                    <div className="absolute left-0 top-full w-[620px] bg-[#FAF8F5] border border-[#D4AF37]/40 shadow-2xl rounded-b-lg p-6 grid grid-cols-3 gap-6 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+                    <div className="absolute left-0 top-full w-[620px] bg-[#FAF8F5] border border-[#D4AF37]/40 shadow-2xl rounded-b-lg p-6 grid grid-cols-3 gap-6 z-50 animate-in fade-in slide-in-from-top-2 duration-200 text-left">
                       <div>
                         <h5 className="font-playfair font-bold text-base text-[#6B1D2F] border-b border-[#E8E2D5] pb-2 mb-3">
                           Shop By Silhouette
@@ -188,7 +207,7 @@ export const Navbar = () => {
                   </button>
 
                   {activeMega === 'home' && (
-                    <div className="absolute top-full left-0 w-72 bg-[#FAF8F5] border border-[#D4AF37]/40 rounded shadow-2xl p-4 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+                    <div className="absolute top-full left-1/2 -translate-x-1/2 w-72 bg-[#FAF8F5] border border-[#D4AF37]/40 rounded shadow-2xl p-4 z-50 animate-in fade-in slide-in-from-top-2 duration-200 text-left">
                       <p className="text-[10px] font-bold uppercase tracking-widest text-[#D4AF37] mb-2 border-b border-[#E8E2D5] pb-1">
                         Luxury Jaipur Bedding
                       </p>
@@ -244,27 +263,8 @@ export const Navbar = () => {
               </nav>
             </div>
 
-            {/* CENTER COLUMN: Perfectly Centered Brand Logo */}
-            <div className="flex items-center justify-center flex-shrink-0 px-1.5 sm:px-3">
-              <Link href="/" className="flex items-center gap-1.5 sm:gap-2.5 group py-1 min-w-0">
-                <img
-                  src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/logo.png`}
-                  alt="Jaypurloom Brand Logo"
-                  className="h-8 sm:h-11 lg:h-12 w-auto object-contain flex-shrink-0 transition-transform duration-300 group-hover:scale-105"
-                />
-                <div className="flex flex-col items-start justify-center min-w-0">
-                  <span className="font-playfair text-base sm:text-xl lg:text-2xl font-bold tracking-[0.01em] text-[#6B1D2F] group-hover:text-[#4A121F] transition-colors truncate">
-                    Jaypurloom
-                  </span>
-                  <span className="hidden 2xl:block font-poppins text-[8px] uppercase tracking-[0.25em] text-[#D4AF37] font-semibold -mt-0.5 truncate">
-                    Jaipur Heritage & Home
-                  </span>
-                </div>
-              </Link>
-            </div>
-
             {/* RIGHT COLUMN: Actions Bar & Login/Sign Up */}
-            <div className="flex items-center gap-1 sm:gap-2 lg:gap-2.5 2xl:gap-3 flex-1 justify-end min-w-0 flex-shrink-0">
+            <div className="flex items-center gap-1 sm:gap-2 lg:gap-2.5 2xl:gap-3 flex-shrink-0 justify-end min-w-0">
               {/* Ask AI Stylist Button (Desktop lg+) */}
               <button
                 onClick={() => setAiModalOpen(true)}
