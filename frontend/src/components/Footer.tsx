@@ -112,17 +112,17 @@ export const Footer = () => {
                   <span>✨ Welcome to Jaypurloom! Check your inbox for secret launch invites.</span>
                 </div>
               ) : (
-                <form onSubmit={handleSubscribe} className="flex gap-2 max-w-sm">
+                <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-2 max-w-sm">
                   <input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Enter your VIP email..."
-                    className="flex-1 bg-white/10 border border-white/20 rounded px-3.5 py-2.5 text-xs font-poppins text-white placeholder-gray-400 focus:outline-none focus:border-[#D4AF37]"
+                    className="w-full sm:flex-1 bg-white/10 border border-white/20 rounded px-3.5 py-2.5 text-xs font-poppins text-white placeholder-gray-400 focus:outline-none focus:border-[#D4AF37]"
                   />
                   <button
                     type="submit"
-                    className="px-5 py-2.5 bg-[#D4AF37] hover:bg-[#B8962D] text-[#1A1A1A] font-poppins font-bold text-xs uppercase tracking-wider rounded transition-colors flex items-center gap-1.5 flex-shrink-0"
+                    className="px-5 py-2.5 bg-[#D4AF37] hover:bg-[#B8962D] text-[#1A1A1A] font-poppins font-bold text-xs uppercase tracking-wider rounded transition-colors flex items-center justify-center gap-1.5 flex-shrink-0"
                   >
                     <span>Join</span>
                     <Send className="w-3.5 h-3.5" />

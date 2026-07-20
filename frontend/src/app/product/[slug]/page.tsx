@@ -172,7 +172,7 @@ export default function ProductDetailPage() {
         {/* Gallery Thumbnails & Big View (7 Cols) */}
         <div className="lg:col-span-7 flex flex-col-reverse sm:flex-row gap-4">
           {/* Thumbnails Sidebar */}
-          <div className="flex sm:flex-col gap-3 overflow-x-auto sm:overflow-visible sm:w-24 flex-shrink-0">
+          <div className="flex sm:flex-col gap-3 overflow-x-auto max-w-full sm:overflow-visible sm:w-24 flex-shrink-0">
             {images.map((img: any, idx: number) => (
               <button
                 key={idx}

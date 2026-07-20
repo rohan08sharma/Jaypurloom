@@ -170,14 +170,14 @@ export default function HomePage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6">
           {categoryShowcase.map((cat, idx) => (
             <Link
               key={idx}
               href={`/shop?category=${cat.slug}`}
-              className="group flex flex-col items-center text-center space-y-3"
+              className="group flex flex-col items-center text-center space-y-2 sm:space-y-3"
             >
-              <div className="relative w-36 h-36 sm:w-44 sm:h-44 rounded-full overflow-hidden border-4 border-[#E8E2D5] group-hover:border-[#D4AF37] transition-all shadow-md group-hover:shadow-luxury">
+              <div className="relative w-28 h-28 xs:w-32 xs:h-32 sm:w-40 sm:h-40 lg:w-44 lg:h-44 rounded-full overflow-hidden border-4 border-[#E8E2D5] group-hover:border-[#D4AF37] transition-all shadow-md group-hover:shadow-luxury">
                 <img
                   src={cat.img}
                   alt={cat.name}
@@ -186,10 +186,10 @@ export default function HomePage() {
                 <div className="absolute inset-0 bg-black/15 group-hover:bg-transparent transition-colors" />
               </div>
               <div>
-                <h4 className="font-playfair text-base font-bold text-[#1A1A1A] group-hover:text-[#6B1D2F] transition-colors">
+                <h4 className="font-playfair text-sm sm:text-base font-bold text-[#1A1A1A] group-hover:text-[#6B1D2F] transition-colors">
                   {cat.name}
                 </h4>
-                <span className="text-xs font-poppins text-[#666]">{cat.count}</span>
+                <span className="text-[11px] sm:text-xs font-poppins text-[#666]">{cat.count}</span>
               </div>
             </Link>
           ))}
@@ -251,18 +251,18 @@ export default function HomePage() {
               <p className="font-poppins text-sm md:text-base text-[#E8E2D5] leading-relaxed">
                 At Jaypurloom, we work hand-in-hand with multi-generational master weavers and block-printers. Every suit set undergoes over 40 hours of meticulous handcrafting, while our 300+ Thread Count Percale bedsheets are screen-printed with natural heritage dyes.
               </p>
-              <div className="grid grid-cols-3 gap-6 pt-4 border-t border-white/20 text-center sm:text-left">
+              <div className="grid grid-cols-3 gap-3 sm:gap-6 pt-4 border-t border-white/20 text-center sm:text-left">
                 <div>
-                  <h4 className="font-playfair text-3xl font-bold text-[#D4AF37]">40+</h4>
-                  <p className="text-xs font-poppins text-[#E8E2D5] mt-1">Master Artisan Families</p>
+                  <h4 className="font-playfair text-2xl sm:text-3xl font-bold text-[#D4AF37]">40+</h4>
+                  <p className="text-[11px] sm:text-xs font-poppins text-[#E8E2D5] mt-1">Master Artisan Families</p>
                 </div>
                 <div>
-                  <h4 className="font-playfair text-3xl font-bold text-[#D4AF37]">100%</h4>
-                  <p className="text-xs font-poppins text-[#E8E2D5] mt-1">Pure Breathable Fabrics</p>
+                  <h4 className="font-playfair text-2xl sm:text-3xl font-bold text-[#D4AF37]">100%</h4>
+                  <p className="text-[11px] sm:text-xs font-poppins text-[#E8E2D5] mt-1">Pure Breathable Fabrics</p>
                 </div>
                 <div>
-                  <h4 className="font-playfair text-3xl font-bold text-[#D4AF37]">50k+</h4>
-                  <p className="text-xs font-poppins text-[#E8E2D5] mt-1">Delighted Queens</p>
+                  <h4 className="font-playfair text-2xl sm:text-3xl font-bold text-[#D4AF37]">50k+</h4>
+                  <p className="text-[11px] sm:text-xs font-poppins text-[#E8E2D5] mt-1">Delighted Queens</p>
                 </div>
               </div>
               <div className="pt-2">

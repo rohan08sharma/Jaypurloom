@@ -8,6 +8,10 @@
     --font-poppins: 'Poppins', sans-serif;
   }
 
+  html, body {
+    @apply overflow-x-hidden w-full max-w-full m-0 p-0;
+  }
+
   body {
     @apply bg-[#FAF8F5] text-[#1A1A1A] font-poppins antialiased selection:bg-[#6B1D2F] selection:text-[#FAF8F5];
   }

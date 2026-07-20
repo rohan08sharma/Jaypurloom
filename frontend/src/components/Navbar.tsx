@@ -57,38 +57,39 @@ export const Navbar = () => {
             : 'bg-[#FAF8F5] border-b border-[#E8E2D5]/70'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20 gap-4">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 w-full">
+          <div className="flex items-center justify-between h-18 sm:h-20 gap-1.5 sm:gap-4 w-full">
             {/* Mobile Menu Toggle & AI Stylist Button (Mobile) */}
-            <div className="flex items-center gap-2 lg:hidden">
+            <div className="flex items-center gap-1 sm:gap-2 lg:hidden flex-shrink-0">
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-2.5 rounded text-[#1A1A1A] hover:bg-black/5 transition-colors"
+                className="p-1.5 sm:p-2.5 rounded text-[#1A1A1A] hover:bg-black/5 transition-colors"
                 aria-label="Toggle Navigation"
               >
-                {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                {mobileMenuOpen ? <X className="w-5 h-5 sm:w-6 sm:h-6" /> : <Menu className="w-5 h-5 sm:w-6 sm:h-6" />}
               </button>
               <button
                 onClick={() => setAiModalOpen(true)}
-                className="p-2 rounded-full bg-[#D4AF37]/20 text-[#6B1D2F] flex items-center gap-1.5 text-xs font-semibold px-2.5"
+                className="p-1.5 sm:p-2 rounded-full bg-[#D4AF37]/20 text-[#6B1D2F] flex items-center gap-1 text-[11px] sm:text-xs font-semibold px-2 sm:px-2.5"
               >
-                <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
-                <span>AI Stylist</span>
+                <Sparkles className="w-3.5 h-3.5 text-[#D4AF37] flex-shrink-0" />
+                <span className="font-bold">AI</span>
+                <span className="hidden sm:inline"> Stylist</span>
               </button>
             </div>
 
             {/* Brand Logo */}
-            <Link href="/" className="flex items-center gap-3 group flex-shrink-0 py-1">
+            <Link href="/" className="flex items-center gap-2 sm:gap-3 group flex-shrink min-w-0 py-1 justify-center">
               <img
                 src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/logo.png`}
                 alt="Jaypurloom Brand Logo"
-                className="h-12 sm:h-14 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+                className="h-10 sm:h-12 lg:h-14 w-auto object-contain flex-shrink-0 transition-transform duration-300 group-hover:scale-105"
               />
-              <div className="flex flex-col items-start justify-center">
-                <span className="font-playfair text-xl sm:text-2xl font-extrabold tracking-[0.12em] text-[#6B1D2F] group-hover:text-[#4A121F] transition-colors">
+              <div className="flex flex-col items-start justify-center min-w-0">
+                <span className="font-playfair text-base sm:text-xl lg:text-2xl font-extrabold tracking-[0.08em] sm:tracking-[0.12em] text-[#6B1D2F] group-hover:text-[#4A121F] transition-colors truncate">
                   JAYPURLOOM
                 </span>
-                <span className="font-poppins text-[8px] sm:text-[9px] uppercase tracking-[0.3em] text-[#D4AF37] font-semibold -mt-1">
+                <span className="hidden sm:block font-poppins text-[8px] sm:text-[9px] uppercase tracking-[0.3em] text-[#D4AF37] font-semibold -mt-1 truncate">
                   Jaipur Heritage & Home
                 </span>
               </div>
@@ -272,7 +273,7 @@ export const Navbar = () => {
             </nav>
 
             {/* Actions Bar (AI, Search, Wishlist, Cart, User) */}
-            <div className="flex items-center gap-3 sm:gap-4">
+            <div className="flex items-center gap-1 sm:gap-3 lg:gap-4 flex-shrink-0">
               {/* Ask AI Stylist Button (Desktop) */}
               <button
                 onClick={() => setAiModalOpen(true)}
@@ -299,15 +300,24 @@ export const Navbar = () => {
                 <Search className="w-4 h-4 text-[#666] absolute left-3 top-2 pointer-events-none" />
               </div>
 
+              {/* Mobile Search Button */}
+              <button
+                onClick={() => setMobileMenuOpen(true)}
+                className="p-1.5 sm:p-2 rounded-full hover:bg-black/5 transition-colors text-[#1A1A1A] md:hidden"
+                aria-label="Search"
+              >
+                <Search className="w-5 h-5" />
+              </button>
+
               {/* Wishlist Link */}
               <Link
                 href="/account?tab=wishlist"
-                className="relative p-2 rounded-full hover:bg-black/5 transition-colors text-[#1A1A1A] hover:text-[#6B1D2F]"
+                className="relative p-1.5 sm:p-2 rounded-full hover:bg-black/5 transition-colors text-[#1A1A1A] hover:text-[#6B1D2F]"
                 aria-label="Wishlist"
               >
                 <Heart className="w-5 h-5" />
                 {wishlist.length > 0 && (
-                  <span className="absolute top-1 right-1 w-4 h-4 bg-[#6B1D2F] text-[#FAF8F5] text-[10px] font-bold rounded-full flex items-center justify-center shadow">
+                  <span className="absolute top-0.5 right-0.5 sm:top-1 sm:right-1 w-3.5 h-3.5 sm:w-4 sm:h-4 bg-[#6B1D2F] text-[#FAF8F5] text-[9px] sm:text-[10px] font-bold rounded-full flex items-center justify-center shadow">
                     {wishlist.length}
                   </span>
                 )}
@@ -316,12 +326,12 @@ export const Navbar = () => {
               {/* Shopping Bag Trigger */}
               <button
                 onClick={() => setIsCartOpen(true)}
-                className="relative p-2 rounded-full hover:bg-black/5 transition-colors text-[#1A1A1A] hover:text-[#6B1D2F]"
+                className="relative p-1.5 sm:p-2 rounded-full hover:bg-black/5 transition-colors text-[#1A1A1A] hover:text-[#6B1D2F]"
                 aria-label="Shopping Bag"
               >
                 <ShoppingBag className="w-5 h-5" />
                 {totalCartCount > 0 && (
-                  <span className="absolute top-1 right-1 w-4 h-4 bg-[#D4AF37] text-[#1A1A1A] text-[10px] font-bold rounded-full flex items-center justify-center shadow">
+                  <span className="absolute top-0.5 right-0.5 sm:top-1 sm:right-1 w-3.5 h-3.5 sm:w-4 sm:h-4 bg-[#D4AF37] text-[#1A1A1A] text-[9px] sm:text-[10px] font-bold rounded-full flex items-center justify-center shadow">
                     {totalCartCount}
                   </span>
                 )}
@@ -331,7 +341,7 @@ export const Navbar = () => {
               <div className="relative group">
                 <Link
                   href={user ? '/account' : '/account'}
-                  className="p-2 rounded-full hover:bg-black/5 transition-colors text-[#1A1A1A] hover:text-[#6B1D2F] flex items-center gap-1.5"
+                  className="p-1.5 sm:p-2 rounded-full hover:bg-black/5 transition-colors text-[#1A1A1A] hover:text-[#6B1D2F] flex items-center gap-1.5"
                   aria-label="Customer Account"
                 >
                   <UserIcon className="w-5 h-5" />
@@ -395,13 +405,13 @@ export const Navbar = () => {
       {mobileMenuOpen && (
         <div className="fixed inset-0 z-50 lg:hidden flex">
           <div className="fixed inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setMobileMenuOpen(false)} />
-          <div className="relative w-80 bg-[#FAF8F5] h-full shadow-2xl z-10 flex flex-col p-6 overflow-y-auto">
+          <div className="relative w-80 max-w-[85vw] bg-[#FAF8F5] h-full shadow-2xl z-10 flex flex-col p-5 sm:p-6 overflow-y-auto">
             <div className="flex items-center justify-between border-b border-[#E8E2D5] pb-4 mb-4">
-              <Link href="/" onClick={() => setMobileMenuOpen(false)} className="flex items-center gap-2">
-                <img src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/logo.png`} alt="Jaypurloom Logo" className="h-10 w-auto object-contain" />
-                <span className="font-playfair text-lg font-bold text-[#6B1D2F] tracking-wide">JAYPURLOOM</span>
+              <Link href="/" onClick={() => setMobileMenuOpen(false)} className="flex items-center gap-2 min-w-0">
+                <img src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/logo.png`} alt="Jaypurloom Logo" className="h-8 sm:h-10 w-auto object-contain flex-shrink-0" />
+                <span className="font-playfair text-base sm:text-lg font-bold text-[#6B1D2F] tracking-wide truncate">JAYPURLOOM</span>
               </Link>
-              <button onClick={() => setMobileMenuOpen(false)}>
+              <button onClick={() => setMobileMenuOpen(false)} className="p-1 flex-shrink-0">
                 <X className="w-6 h-6 text-[#1A1A1A]" />
               </button>
             </div>

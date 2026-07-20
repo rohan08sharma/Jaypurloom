@@ -36,12 +36,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${playfair.variable} ${poppins.variable}`}>
-      <body className="min-h-screen flex flex-col bg-[#FAF8F5]">
+      <body className="min-h-screen flex flex-col bg-[#FAF8F5] overflow-x-hidden w-full max-w-full">
         <Providers>
           <AnnouncementBar />
           <Navbar />
           <CartDrawer />
-          <main className="flex-1">{children}</main>
+          <main className="flex-1 w-full max-w-full overflow-x-hidden">{children}</main>
           <Footer />
           <WhatsAppChatButton />
         </Providers>
