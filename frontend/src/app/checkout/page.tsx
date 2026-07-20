@@ -72,14 +72,16 @@ export default function CheckoutPage() {
       }
 
       await clearCart();
+      if (typeof window !== 'undefined') localStorage.setItem('jpl_last_order_id', orderId);
       showToast('🎉 Order placed successfully! Your royal pieces are being prepared.', 'success');
-      router.push(`/order-success/${orderId}`);
+      router.push(`/order-success?id=${orderId}`);
     } catch (err: any) {
       const msg = err.response?.data?.message || 'Order placed via simulated checkout engine.';
       const orderId = `ord-jpl-${Math.random().toString(36).substring(2, 8)}`;
       await clearCart();
+      if (typeof window !== 'undefined') localStorage.setItem('jpl_last_order_id', orderId);
       showToast(msg, 'success');
-      router.push(`/order-success/${orderId}`);
+      router.push(`/order-success?id=${orderId}`);
     } finally {
       setLoadingOrder(false);
     }
