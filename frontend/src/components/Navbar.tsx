@@ -58,209 +58,213 @@ export const Navbar = () => {
         }`}
       >
         <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6 w-full">
-          <div className="flex items-center justify-between h-16 sm:h-20 gap-1 sm:gap-2.5 xl:gap-3 2xl:gap-4 w-full min-w-0">
-            {/* Mobile/Tablet Menu Toggle & AI Stylist Button (< 2xl viewports) */}
-            <div className="flex items-center gap-1 sm:gap-2 2xl:hidden flex-shrink-0">
-              <button
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-1.5 sm:p-2 rounded text-[#1A1A1A] hover:bg-black/5 transition-colors flex-shrink-0"
-                aria-label="Toggle Navigation Menu"
-              >
-                {mobileMenuOpen ? <X className="w-5 h-5 sm:w-6 sm:h-6" /> : <Menu className="w-5 h-5 sm:w-6 sm:h-6" />}
-              </button>
-              <button
-                onClick={() => setAiModalOpen(true)}
-                className="p-1 sm:p-1.5 rounded-full bg-[#D4AF37]/20 text-[#6B1D2F] flex items-center gap-1 text-[10px] sm:text-xs font-semibold px-2 sm:px-2.5 flex-shrink-0"
-                title="Ask AI Stylist"
-              >
-                <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#D4AF37] flex-shrink-0" />
-                <span className="font-bold">AI</span>
-                <span className="hidden md:inline"> Stylist</span>
-              </button>
-            </div>
-
-            {/* Brand Logo */}
-            <Link href="/" className="flex items-center gap-1.5 sm:gap-2.5 group flex-shrink-0 py-1 min-w-0">
-              <img
-                src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/logo.png`}
-                alt="Jaypurloom Brand Logo"
-                className="h-8 sm:h-11 lg:h-12 w-auto object-contain flex-shrink-0 transition-transform duration-300 group-hover:scale-105"
-              />
-              <div className="flex flex-col items-start justify-center min-w-0">
-                <span className="font-playfair text-base sm:text-xl lg:text-2xl font-bold tracking-[0.01em] text-[#6B1D2F] group-hover:text-[#4A121F] transition-colors truncate">
-                  Jaypurloom
-                </span>
-                <span className="hidden 2xl:block font-poppins text-[8px] uppercase tracking-[0.25em] text-[#D4AF37] font-semibold -mt-0.5 truncate">
-                  Jaipur Heritage & Home
-                </span>
-              </div>
-            </Link>
-
-            {/* Desktop Navigation Menu (Mega Menu Support on 2xl+) */}
-            <nav className="hidden 2xl:flex items-center gap-5 font-poppins text-xs font-semibold text-[#1A1A1A] whitespace-nowrap flex-shrink-0">
-              {/* Women's Ethnic Wear Mega Dropdown */}
-              <div
-                className="relative py-7 group"
-                onMouseEnter={() => setActiveMega('women')}
-                onMouseLeave={() => setActiveMega(null)}
-              >
-                <button className="flex items-center gap-1 hover:text-[#6B1D2F] transition-colors uppercase tracking-wider font-semibold">
-                  <span>Women&apos;s Suit Sets</span>
-                  <ChevronDown className={`w-3.5 h-3.5 text-[#6B1D2F] transition-transform duration-200 ${activeMega === 'women' ? 'rotate-180' : ''}`} />
+          <div className="flex items-center justify-between h-16 sm:h-20 gap-1 sm:gap-2 lg:gap-3 w-full min-w-0">
+            {/* LEFT COLUMN: Mobile/Tablet Menu OR Desktop Navigation Sub Options on Top Left */}
+            <div className="flex items-center gap-1.5 sm:gap-2.5 lg:gap-3 xl:gap-4 flex-1 justify-start min-w-0">
+              {/* Mobile/Tablet Toggle (< xl viewports) */}
+              <div className="flex items-center gap-1 sm:gap-2 xl:hidden flex-shrink-0">
+                <button
+                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                  className="p-1.5 sm:p-2 rounded text-[#1A1A1A] hover:bg-black/5 transition-colors flex-shrink-0"
+                  aria-label="Toggle Navigation Menu"
+                >
+                  {mobileMenuOpen ? <X className="w-5 h-5 sm:w-6 sm:h-6" /> : <Menu className="w-5 h-5 sm:w-6 sm:h-6" />}
                 </button>
+                <button
+                  onClick={() => setAiModalOpen(true)}
+                  className="p-1 sm:p-1.5 rounded-full bg-[#D4AF37]/20 text-[#6B1D2F] flex items-center gap-1 text-[10px] sm:text-xs font-semibold px-2 sm:px-2.5 flex-shrink-0"
+                  title="Ask AI Stylist"
+                >
+                  <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#D4AF37] flex-shrink-0" />
+                  <span className="font-bold">AI</span>
+                </button>
+              </div>
 
-                {activeMega === 'women' && (
-                  <div className="absolute left-0 top-full w-[620px] bg-[#FAF8F5] border border-[#D4AF37]/40 shadow-2xl rounded-b-lg p-6 grid grid-cols-3 gap-6 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
-                    <div>
-                      <h5 className="font-playfair font-bold text-base text-[#6B1D2F] border-b border-[#E8E2D5] pb-2 mb-3">
-                        Shop By Silhouette
-                      </h5>
-                      <ul className="space-y-2.5 text-xs text-[#1A1A1A]">
-                        <li>
-                          <Link href="/shop?category=anarkali-suits" className="hover:text-[#6B1D2F] hover:underline block">
-                            Chanderi Anarkali Suits
-                          </Link>
-                        </li>
-                        <li>
-                          <Link href="/shop?category=cotton-suit-sets" className="hover:text-[#6B1D2F] hover:underline block">
-                            Pure Jaipuri Cotton Suits
-                          </Link>
-                        </li>
-                        <li>
-                          <Link href="/shop?category=kurta-sets" className="hover:text-[#6B1D2F] hover:underline block">
-                            Office & Casual Kurta Sets
-                          </Link>
-                        </li>
-                        <li>
-                          <Link href="/shop?category=ladies-suit-sets" className="hover:text-[#6B1D2F] hover:underline block">
-                            Festive Straight Suit Sets
-                          </Link>
-                        </li>
-                        <li>
-                          <Link href="/shop?category=womens-ethnic-wear" className="hover:text-[#6B1D2F] font-semibold text-[#6B1D2F] block pt-1">
-                            ✨ View All Women&apos;s Wear &rarr;
-                          </Link>
-                        </li>
-                      </ul>
-                    </div>
+              {/* Desktop Navigation Sub Options on Left Top Corner (xl+ viewports) */}
+              <nav className="hidden xl:flex items-center gap-3 xl:gap-3.5 2xl:gap-5 font-poppins text-[11px] 2xl:text-xs font-semibold text-[#1A1A1A] whitespace-nowrap flex-shrink-0">
+                {/* Women's Ethnic Wear Mega Dropdown */}
+                <div
+                  className="relative py-7 group"
+                  onMouseEnter={() => setActiveMega('women')}
+                  onMouseLeave={() => setActiveMega(null)}
+                >
+                  <button className="flex items-center gap-1 hover:text-[#6B1D2F] transition-colors uppercase tracking-wider font-semibold">
+                    <span>Women&apos;s Suit Sets</span>
+                    <ChevronDown className={`w-3.5 h-3.5 text-[#6B1D2F] transition-transform duration-200 ${activeMega === 'women' ? 'rotate-180' : ''}`} />
+                  </button>
 
-                    <div>
-                      <h5 className="font-playfair font-bold text-base text-[#6B1D2F] border-b border-[#E8E2D5] pb-2 mb-3">
-                        Curated Collections
-                      </h5>
-                      <ul className="space-y-2.5 text-xs text-[#1A1A1A]">
-                        <li>
-                          <Link href="/shop?fabric=Chanderi+Silk" className="hover:text-[#6B1D2F] hover:underline block">
-                            Royal Chanderi Silk
-                          </Link>
-                        </li>
-                        <li>
-                          <Link href="/shop?fabric=Pure+Cotton" className="hover:text-[#6B1D2F] hover:underline block">
-                            Sanganeri Block Prints
-                          </Link>
-                        </li>
-                        <li>
-                          <Link href="/shop?search=zari" className="hover:text-[#6B1D2F] hover:underline block">
-                            Gota Patti & Zari Work
-                          </Link>
-                        </li>
-                        <li>
-                          <Link href="/shop?isBestSeller=true" className="hover:text-[#6B1D2F] hover:underline block">
-                            ⭐ Bestselling Favorites
-                          </Link>
-                        </li>
-                      </ul>
-                    </div>
-
-                    <div className="bg-amber-50/70 p-3.5 rounded border border-[#D4AF37]/30 flex flex-col justify-between text-center">
-                      <div className="aspect-[4/3] rounded overflow-hidden mb-2">
-                        <img
-                          src="https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?w=400&auto=format&fit=crop"
-                          alt="Featured Royal Suit"
-                          className="w-full h-full object-cover hover:scale-105 transition-transform"
-                        />
+                  {activeMega === 'women' && (
+                    <div className="absolute left-0 top-full w-[620px] bg-[#FAF8F5] border border-[#D4AF37]/40 shadow-2xl rounded-b-lg p-6 grid grid-cols-3 gap-6 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+                      <div>
+                        <h5 className="font-playfair font-bold text-base text-[#6B1D2F] border-b border-[#E8E2D5] pb-2 mb-3">
+                          Shop By Silhouette
+                        </h5>
+                        <ul className="space-y-2.5 text-xs text-[#1A1A1A]">
+                          <li>
+                            <Link href="/shop?category=anarkali-suits" className="hover:text-[#6B1D2F] hover:underline block">
+                              Chanderi Anarkali Suits
+                            </Link>
+                          </li>
+                          <li>
+                            <Link href="/shop?category=cotton-suit-sets" className="hover:text-[#6B1D2F] hover:underline block">
+                              Pure Jaipuri Cotton Suits
+                            </Link>
+                          </li>
+                          <li>
+                            <Link href="/shop?category=kurta-sets" className="hover:text-[#6B1D2F] hover:underline block">
+                              Office & Casual Kurta Sets
+                            </Link>
+                          </li>
+                          <li>
+                            <Link href="/shop?category=ladies-suit-sets" className="hover:text-[#6B1D2F] hover:underline block">
+                              Festive Straight Suit Sets
+                            </Link>
+                          </li>
+                          <li>
+                            <Link href="/shop?category=womens-ethnic-wear" className="hover:text-[#6B1D2F] font-semibold text-[#6B1D2F] block pt-1">
+                              ✨ View All Women&apos;s Wear &rarr;
+                            </Link>
+                          </li>
+                        </ul>
                       </div>
-                      <p className="font-playfair text-xs font-bold text-[#6B1D2F]">Royal Maroon Zari Anarkali</p>
-                      <Link
-                        href="/product/royal-maroon-zari-anarkali-suit"
-                        className="mt-1 text-[11px] font-poppins font-bold bg-[#6B1D2F] text-[#FAF8F5] py-1 rounded hover:bg-[#4A121F] block"
-                      >
-                        Shop Suit Set
-                      </Link>
-                    </div>
-                  </div>
-                )}
-              </div>
 
-              {/* Home Furnishing Dropdown */}
-              <div
-                className="relative py-7 group"
-                onMouseEnter={() => setActiveMega('home')}
-                onMouseLeave={() => setActiveMega(null)}
-              >
-                <button className="flex items-center gap-1 hover:text-[#6B1D2F] transition-colors uppercase tracking-wider font-semibold">
-                  <span>Home Furnishing</span>
-                  <ChevronDown className={`w-3.5 h-3.5 text-[#6B1D2F] transition-transform duration-200 ${activeMega === 'home' ? 'rotate-180' : ''}`} />
-                </button>
+                      <div>
+                        <h5 className="font-playfair font-bold text-base text-[#6B1D2F] border-b border-[#E8E2D5] pb-2 mb-3">
+                          Curated Collections
+                        </h5>
+                        <ul className="space-y-2.5 text-xs text-[#1A1A1A]">
+                          <li>
+                            <Link href="/shop?fabric=Chanderi+Silk" className="hover:text-[#6B1D2F] hover:underline block">
+                              Royal Chanderi Silk
+                            </Link>
+                          </li>
+                          <li>
+                            <Link href="/shop?fabric=Pure+Cotton" className="hover:text-[#6B1D2F] hover:underline block">
+                              Sanganeri Block Prints
+                            </Link>
+                          </li>
+                          <li>
+                            <Link href="/shop?search=zari" className="hover:text-[#6B1D2F] hover:underline block">
+                              Gota Patti & Zari Work
+                            </Link>
+                          </li>
+                          <li>
+                            <Link href="/shop?isBestSeller=true" className="hover:text-[#6B1D2F] hover:underline block">
+                              ⭐ Bestselling Favorites
+                            </Link>
+                          </li>
+                        </ul>
+                      </div>
 
-                {activeMega === 'home' && (
-                  <div className="absolute top-full left-0 w-72 bg-[#FAF8F5] border border-[#D4AF37]/40 rounded shadow-2xl p-4 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
-                    <p className="text-[10px] font-bold uppercase tracking-widest text-[#D4AF37] mb-2 border-b border-[#E8E2D5] pb-1">
-                      Luxury Jaipur Bedding
-                    </p>
-                    <ul className="space-y-2.5 text-xs text-[#1A1A1A]">
-                      <li>
-                        <Link href="/shop?category=king-size-bedsheets" className="block hover:text-[#6B1D2F] transition-colors font-medium">
-                          👑 King Size Bedsheets (300 TC Percale)
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="/shop?category=queen-size-bedsheets" className="block hover:text-[#6B1D2F] transition-colors font-medium">
-                          🛏️ Queen Size Bedsheets (Hand Block Print)
-                        </Link>
-                      </li>
-                    </ul>
-
-                    {/* Featured Item Mini Card */}
-                    <div className="mt-3 pt-3 border-t border-[#E8E2D5]">
                       <div className="bg-amber-50/70 p-3.5 rounded border border-[#D4AF37]/30 flex flex-col justify-between text-center">
                         <div className="aspect-[4/3] rounded overflow-hidden mb-2">
                           <img
-                            src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=400&auto=format&fit=crop"
-                            alt="Maharaja Palace King Sheet"
+                            src="https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?w=400&auto=format&fit=crop"
+                            alt="Featured Royal Suit"
                             className="w-full h-full object-cover hover:scale-105 transition-transform"
                           />
                         </div>
-                        <p className="font-playfair text-xs font-bold text-[#6B1D2F]">Maharaja Palace 300 TC Sheet</p>
+                        <p className="font-playfair text-xs font-bold text-[#6B1D2F]">Royal Maroon Zari Anarkali</p>
                         <Link
-                          href="/product/maharaja-palace-300-tc-king-size-percale-bedsheet"
+                          href="/product/royal-maroon-zari-anarkali-suit"
                           className="mt-1 text-[11px] font-poppins font-bold bg-[#6B1D2F] text-[#FAF8F5] py-1 rounded hover:bg-[#4A121F] block"
                         >
-                          Shop Bedsheet
+                          Shop Suit Set
                         </Link>
                       </div>
                     </div>
-                  </div>
-                )}
-              </div>
+                  )}
+                </div>
 
-              <Link
-                href="/shop?isNewArrival=true"
-                className="hover:text-[#6B1D2F] transition-colors uppercase tracking-wider font-semibold"
-              >
-                New Arrivals ✨
+                {/* Home Furnishing Dropdown */}
+                <div
+                  className="relative py-7 group"
+                  onMouseEnter={() => setActiveMega('home')}
+                  onMouseLeave={() => setActiveMega(null)}
+                >
+                  <button className="flex items-center gap-1 hover:text-[#6B1D2F] transition-colors uppercase tracking-wider font-semibold">
+                    <span>Home Furnishing</span>
+                    <ChevronDown className={`w-3.5 h-3.5 text-[#6B1D2F] transition-transform duration-200 ${activeMega === 'home' ? 'rotate-180' : ''}`} />
+                  </button>
+
+                  {activeMega === 'home' && (
+                    <div className="absolute top-full left-0 w-72 bg-[#FAF8F5] border border-[#D4AF37]/40 rounded shadow-2xl p-4 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+                      <p className="text-[10px] font-bold uppercase tracking-widest text-[#D4AF37] mb-2 border-b border-[#E8E2D5] pb-1">
+                        Luxury Jaipur Bedding
+                      </p>
+                      <ul className="space-y-2.5 text-xs text-[#1A1A1A]">
+                        <li>
+                          <Link href="/shop?category=king-size-bedsheets" className="block hover:text-[#6B1D2F] transition-colors font-medium">
+                            👑 King Size Bedsheets (300 TC Percale)
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="/shop?category=queen-size-bedsheets" className="block hover:text-[#6B1D2F] transition-colors font-medium">
+                            🛏️ Queen Size Bedsheets (Hand Block Print)
+                          </Link>
+                        </li>
+                      </ul>
+
+                      {/* Featured Item Mini Card */}
+                      <div className="mt-3 pt-3 border-t border-[#E8E2D5]">
+                        <div className="bg-amber-50/70 p-3.5 rounded border border-[#D4AF37]/30 flex flex-col justify-between text-center">
+                          <div className="aspect-[4/3] rounded overflow-hidden mb-2">
+                            <img
+                              src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=400&auto=format&fit=crop"
+                              alt="Maharaja Palace King Sheet"
+                              className="w-full h-full object-cover hover:scale-105 transition-transform"
+                            />
+                          </div>
+                          <p className="font-playfair text-xs font-bold text-[#6B1D2F]">Maharaja Palace 300 TC Sheet</p>
+                          <Link
+                            href="/product/maharaja-palace-300-tc-king-size-percale-bedsheet"
+                            className="mt-1 text-[11px] font-poppins font-bold bg-[#6B1D2F] text-[#FAF8F5] py-1 rounded hover:bg-[#4A121F] block"
+                          >
+                            Shop Bedsheet
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                <Link
+                  href="/shop?isNewArrival=true"
+                  className="hover:text-[#6B1D2F] transition-colors uppercase tracking-wider font-semibold"
+                >
+                  New Arrivals ✨
+                </Link>
+
+                <Link
+                  href="/about"
+                  className="hover:text-[#6B1D2F] transition-colors uppercase tracking-wider font-semibold"
+                >
+                  Our Heritage
+                </Link>
+              </nav>
+            </div>
+
+            {/* CENTER COLUMN: Perfectly Centered Brand Logo */}
+            <div className="flex items-center justify-center flex-shrink-0 px-1.5 sm:px-3">
+              <Link href="/" className="flex items-center gap-1.5 sm:gap-2.5 group py-1 min-w-0">
+                <img
+                  src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/logo.png`}
+                  alt="Jaypurloom Brand Logo"
+                  className="h-8 sm:h-11 lg:h-12 w-auto object-contain flex-shrink-0 transition-transform duration-300 group-hover:scale-105"
+                />
+                <div className="flex flex-col items-start justify-center min-w-0">
+                  <span className="font-playfair text-base sm:text-xl lg:text-2xl font-bold tracking-[0.01em] text-[#6B1D2F] group-hover:text-[#4A121F] transition-colors truncate">
+                    Jaypurloom
+                  </span>
+                  <span className="hidden 2xl:block font-poppins text-[8px] uppercase tracking-[0.25em] text-[#D4AF37] font-semibold -mt-0.5 truncate">
+                    Jaipur Heritage & Home
+                  </span>
+                </div>
               </Link>
+            </div>
 
-              <Link
-                href="/about"
-                className="hover:text-[#6B1D2F] transition-colors uppercase tracking-wider font-semibold"
-              >
-                Our Heritage
-              </Link>
-            </nav>
-
-            {/* Actions Bar (Search, Wishlist, Cart, Persistent Login/User CTA) */}
-            <div className="flex items-center gap-1 sm:gap-2 lg:gap-2.5 2xl:gap-3 flex-shrink-0 min-w-0">
+            {/* RIGHT COLUMN: Actions Bar & Login/Sign Up */}
+            <div className="flex items-center gap-1 sm:gap-2 lg:gap-2.5 2xl:gap-3 flex-1 justify-end min-w-0 flex-shrink-0">
               {/* Ask AI Stylist Button (Desktop xl+) */}
               <button
                 onClick={() => setAiModalOpen(true)}
