@@ -58,9 +58,9 @@ export const Navbar = () => {
         }`}
       >
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 w-full">
-          <div className="flex items-center justify-between h-18 sm:h-20 gap-1.5 sm:gap-4 w-full">
-            {/* Mobile Menu Toggle & AI Stylist Button (Mobile) */}
-            <div className="flex items-center gap-1 sm:gap-2 lg:hidden flex-shrink-0">
+          <div className="flex items-center justify-between h-18 sm:h-20 gap-2 sm:gap-4 w-full">
+            {/* Mobile Menu Toggle & AI Stylist Button (Mobile/Tablet/Small Laptop) */}
+            <div className="flex items-center gap-1 sm:gap-2 xl:hidden flex-shrink-0">
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 className="p-1.5 sm:p-2.5 rounded text-[#1A1A1A] hover:bg-black/5 transition-colors"
@@ -79,7 +79,7 @@ export const Navbar = () => {
             </div>
 
             {/* Brand Logo */}
-            <Link href="/" className="flex items-center gap-2 sm:gap-3 group flex-shrink min-w-0 py-1 justify-center">
+            <Link href="/" className="flex items-center gap-2 sm:gap-3 group flex-shrink-0 py-1 justify-center">
               <img
                 src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/logo.png`}
                 alt="Jaypurloom Brand Logo"
@@ -96,7 +96,7 @@ export const Navbar = () => {
             </Link>
 
             {/* Desktop Navigation Menu (Mega Menu Support) */}
-            <nav className="hidden lg:flex items-center gap-8 font-poppins text-sm font-medium text-[#1A1A1A]">
+            <nav className="hidden xl:flex items-center gap-5 xl:gap-7 font-poppins text-xs font-semibold text-[#1A1A1A] whitespace-nowrap flex-shrink-0">
               {/* Women's Ethnic Wear Mega Dropdown */}
               <div
                 className="relative py-7 group"
@@ -274,17 +274,17 @@ export const Navbar = () => {
 
             {/* Actions Bar (AI, Search, Wishlist, Cart, User) */}
             <div className="flex items-center gap-1 sm:gap-3 lg:gap-4 flex-shrink-0">
-              {/* Ask AI Stylist Button (Desktop) */}
+              {/* Ask AI Stylist Button (Desktop xl+) */}
               <button
                 onClick={() => setAiModalOpen(true)}
-                className="hidden lg:flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#D4AF37]/20 to-amber-100/40 border border-[#D4AF37] text-[#6B1D2F] rounded-full text-xs font-bold tracking-wide hover:bg-[#D4AF37] hover:text-[#1A1A1A] transition-all shadow-sm"
+                className="hidden xl:flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-[#D4AF37]/20 to-amber-100/40 border border-[#D4AF37] text-[#6B1D2F] rounded-full text-xs font-bold tracking-wide hover:bg-[#D4AF37] hover:text-[#1A1A1A] transition-all shadow-sm whitespace-nowrap flex-shrink-0"
               >
                 <Sparkles className="w-4 h-4 text-[#D4AF37]" />
                 <span>Ask AI Stylist</span>
               </button>
 
               {/* Quick Search */}
-              <div className="relative hidden md:block w-48 lg:w-60">
+              <div className="relative hidden md:block w-36 lg:w-48 xl:w-56 flex-shrink">
                 <input
                   type="text"
                   value={searchQuery}
@@ -295,9 +295,9 @@ export const Navbar = () => {
                     }
                   }}
                   placeholder="Search Anarkali, Bedsheet..."
-                  className="w-full bg-white/90 border border-[#E8E2D5] rounded-full py-1.5 pl-9 pr-3 text-xs font-poppins focus:outline-none focus:border-[#6B1D2F] shadow-inner text-[#1A1A1A]"
+                  className="w-full bg-white/90 border border-[#E8E2D5] rounded-full py-1.5 pl-8 pr-3 text-xs font-poppins focus:outline-none focus:border-[#6B1D2F] shadow-inner text-[#1A1A1A] truncate"
                 />
-                <Search className="w-4 h-4 text-[#666] absolute left-3 top-2 pointer-events-none" />
+                <Search className="w-3.5 h-3.5 text-[#666] absolute left-2.5 top-2.5 pointer-events-none" />
               </div>
 
               {/* Mobile Search Button */}

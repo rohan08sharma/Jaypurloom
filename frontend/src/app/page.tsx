@@ -85,8 +85,8 @@ export default function HomePage() {
         {heroSlides.map((slide, index) => (
           <div
             key={index}
-            className={`absolute inset-0 transition-opacity duration-1000 ${
-              index === currentHeroSlide ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'
+            className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
+              index === currentHeroSlide ? 'opacity-100 z-10 pointer-events-auto' : 'opacity-0 z-0 pointer-events-none select-none'
             }`}
           >
             {/* Background Image with Dark Gradient */}
@@ -99,36 +99,38 @@ export default function HomePage() {
               <div className="absolute inset-0 bg-gradient-to-r from-[#1A1A1A]/90 via-[#1A1A1A]/50 to-transparent" />
             </div>
 
-            {/* Slide Text Content */}
-            <div className="relative z-20 max-w-7xl mx-auto h-full px-4 sm:px-6 lg:px-8 flex flex-col justify-center max-w-2xl">
-              <div className="space-y-6 animate-in slide-in-from-bottom-6 duration-700">
-                <span className="inline-block bg-[#D4AF37] text-[#1A1A1A] font-poppins text-xs font-bold uppercase tracking-[0.2em] px-4 py-1.5 rounded-sm shadow-gold">
-                  {slide.badge}
-                </span>
+            {/* Slide Text Content - ONLY rendered for active slide to completely eliminate text overlapping during slide transitions or window resize */}
+            {index === currentHeroSlide && (
+              <div className="relative z-20 max-w-7xl mx-auto h-full px-4 sm:px-6 lg:px-8 flex flex-col justify-center max-w-2xl">
+                <div className="space-y-4 sm:space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                  <span className="inline-block bg-[#D4AF37] text-[#1A1A1A] font-poppins text-xs font-bold uppercase tracking-[0.2em] px-4 py-1.5 rounded-sm shadow-gold">
+                    {slide.badge}
+                  </span>
 
-                <h3 className="subheading-luxury text-[#D4AF37] text-sm md:text-base">
-                  {slide.subtitle}
-                </h3>
+                  <h3 className="subheading-luxury text-[#D4AF37] text-sm md:text-base">
+                    {slide.subtitle}
+                  </h3>
 
-                <h1 className="font-playfair text-4xl sm:text-6xl font-bold text-[#FAF8F5] leading-tight">
-                  {slide.title}
-                </h1>
+                  <h1 className="font-playfair text-4xl sm:text-6xl font-bold text-[#FAF8F5] leading-tight">
+                    {slide.title}
+                  </h1>
 
-                <p className="font-poppins text-sm sm:text-base text-[#E8E2D5] max-w-xl leading-relaxed">
-                  {slide.description}
-                </p>
+                  <p className="font-poppins text-sm sm:text-base text-[#E8E2D5] max-w-xl leading-relaxed">
+                    {slide.description}
+                  </p>
 
-                <div className="pt-4 flex flex-wrap gap-4">
-                  <Link href={slide.ctaLink} className="btn-gold shadow-2xl">
-                    <span>{slide.ctaText}</span>
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </Link>
-                  <Link href="/shop" className="btn-secondary !border-white !text-white hover:!bg-white hover:!text-[#1A1A1A]">
-                    <span>View Complete Catalog</span>
-                  </Link>
+                  <div className="pt-4 flex flex-wrap gap-4">
+                    <Link href={slide.ctaLink} className="btn-gold shadow-2xl">
+                      <span>{slide.ctaText}</span>
+                      <ArrowRight className="w-4 h-4 ml-2" />
+                    </Link>
+                    <Link href="/shop" className="btn-secondary !border-white !text-white hover:!bg-white hover:!text-[#1A1A1A]">
+                      <span>View Complete Catalog</span>
+                    </Link>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
         ))}
 
