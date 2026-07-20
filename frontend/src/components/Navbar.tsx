@@ -61,8 +61,8 @@ export const Navbar = () => {
           <div className="flex items-center justify-between h-16 sm:h-20 gap-1 sm:gap-2 lg:gap-3 w-full min-w-0">
             {/* LEFT COLUMN: Mobile/Tablet Menu OR Desktop Navigation Sub Options on Top Left */}
             <div className="flex items-center gap-1.5 sm:gap-2.5 lg:gap-3 xl:gap-4 flex-1 justify-start min-w-0">
-              {/* Mobile/Tablet Toggle (< xl viewports) */}
-              <div className="flex items-center gap-1 sm:gap-2 xl:hidden flex-shrink-0">
+              {/* Mobile/Tablet Toggle (< lg viewports) */}
+              <div className="flex items-center gap-1 sm:gap-2 lg:hidden flex-shrink-0">
                 <button
                   onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                   className="p-1.5 sm:p-2 rounded text-[#1A1A1A] hover:bg-black/5 transition-colors flex-shrink-0"
@@ -80,8 +80,8 @@ export const Navbar = () => {
                 </button>
               </div>
 
-              {/* Desktop Navigation Sub Options on Left Top Corner (xl+ viewports) */}
-              <nav className="hidden xl:flex items-center gap-3 xl:gap-3.5 2xl:gap-5 font-poppins text-[11px] 2xl:text-xs font-semibold text-[#1A1A1A] whitespace-nowrap flex-shrink-0">
+              {/* Desktop Navigation Sub Options on Left Top Corner (lg+ viewports) */}
+              <nav className="hidden lg:flex items-center gap-2 lg:gap-2.5 xl:gap-3.5 2xl:gap-5 font-poppins text-[10.5px] xl:text-[11px] 2xl:text-xs font-semibold text-[#1A1A1A] whitespace-nowrap flex-shrink-0">
                 {/* Women's Ethnic Wear Mega Dropdown */}
                 <div
                   className="relative py-7 group"
@@ -265,10 +265,10 @@ export const Navbar = () => {
 
             {/* RIGHT COLUMN: Actions Bar & Login/Sign Up */}
             <div className="flex items-center gap-1 sm:gap-2 lg:gap-2.5 2xl:gap-3 flex-1 justify-end min-w-0 flex-shrink-0">
-              {/* Ask AI Stylist Button (Desktop xl+) */}
+              {/* Ask AI Stylist Button (Desktop lg+) */}
               <button
                 onClick={() => setAiModalOpen(true)}
-                className="hidden xl:flex items-center gap-1 px-2.5 py-1.5 bg-gradient-to-r from-[#D4AF37]/20 to-amber-100/40 border border-[#D4AF37] text-[#6B1D2F] rounded-full text-[11px] 2xl:text-xs font-bold tracking-wide hover:bg-[#D4AF37] hover:text-[#1A1A1A] transition-all shadow-sm whitespace-nowrap flex-shrink-0"
+                className="hidden lg:flex items-center gap-1 px-2 py-1 xl:px-2.5 xl:py-1.5 bg-gradient-to-r from-[#D4AF37]/20 to-amber-100/40 border border-[#D4AF37] text-[#6B1D2F] rounded-full text-[10.5px] xl:text-[11px] 2xl:text-xs font-bold tracking-wide hover:bg-[#D4AF37] hover:text-[#1A1A1A] transition-all shadow-sm whitespace-nowrap flex-shrink-0"
               >
                 <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
                 <span className="font-bold">AI</span>
