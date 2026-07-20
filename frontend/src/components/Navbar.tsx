@@ -57,46 +57,47 @@ export const Navbar = () => {
             : 'bg-[#FAF8F5] border-b border-[#E8E2D5]/70'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 w-full">
-          <div className="flex items-center justify-between h-18 sm:h-20 gap-2 sm:gap-4 w-full">
-            {/* Mobile Menu Toggle & AI Stylist Button (Mobile/Tablet/Small Laptop) */}
+        <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6 w-full">
+          <div className="flex items-center justify-between h-16 sm:h-20 gap-1.5 sm:gap-3 lg:gap-4 w-full min-w-0">
+            {/* Mobile/Tablet Menu Toggle & AI Stylist Button (< xl viewports) */}
             <div className="flex items-center gap-1 sm:gap-2 xl:hidden flex-shrink-0">
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-1.5 sm:p-2.5 rounded text-[#1A1A1A] hover:bg-black/5 transition-colors"
-                aria-label="Toggle Navigation"
+                className="p-1.5 sm:p-2 rounded text-[#1A1A1A] hover:bg-black/5 transition-colors flex-shrink-0"
+                aria-label="Toggle Navigation Menu"
               >
                 {mobileMenuOpen ? <X className="w-5 h-5 sm:w-6 sm:h-6" /> : <Menu className="w-5 h-5 sm:w-6 sm:h-6" />}
               </button>
               <button
                 onClick={() => setAiModalOpen(true)}
-                className="p-1.5 sm:p-2 rounded-full bg-[#D4AF37]/20 text-[#6B1D2F] flex items-center gap-1 text-[11px] sm:text-xs font-semibold px-2 sm:px-2.5"
+                className="p-1 sm:p-1.5 rounded-full bg-[#D4AF37]/20 text-[#6B1D2F] flex items-center gap-1 text-[10px] sm:text-xs font-semibold px-2 sm:px-2.5 flex-shrink-0"
+                title="Ask AI Stylist"
               >
-                <Sparkles className="w-3.5 h-3.5 text-[#D4AF37] flex-shrink-0" />
+                <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#D4AF37] flex-shrink-0" />
                 <span className="font-bold">AI</span>
-                <span className="hidden sm:inline"> Stylist</span>
+                <span className="hidden md:inline"> Stylist</span>
               </button>
             </div>
 
             {/* Brand Logo */}
-            <Link href="/" className="flex items-center gap-2 sm:gap-3 group flex-shrink-0 py-1 justify-center">
+            <Link href="/" className="flex items-center gap-1.5 sm:gap-2.5 group flex-shrink-0 py-1 min-w-0">
               <img
                 src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/logo.png`}
                 alt="Jaypurloom Brand Logo"
-                className="h-10 sm:h-12 lg:h-14 w-auto object-contain flex-shrink-0 transition-transform duration-300 group-hover:scale-105"
+                className="h-8 sm:h-11 lg:h-12 w-auto object-contain flex-shrink-0 transition-transform duration-300 group-hover:scale-105"
               />
               <div className="flex flex-col items-start justify-center min-w-0">
-                <span className="font-playfair text-xl sm:text-2xl lg:text-3xl font-bold tracking-[0.01em] text-[#6B1D2F] group-hover:text-[#4A121F] transition-colors truncate">
+                <span className="font-playfair text-base sm:text-xl lg:text-2xl font-bold tracking-[0.01em] text-[#6B1D2F] group-hover:text-[#4A121F] transition-colors truncate">
                   Jaypurloom
                 </span>
-                <span className="hidden sm:block font-poppins text-[8px] sm:text-[9px] uppercase tracking-[0.3em] text-[#D4AF37] font-semibold -mt-1 truncate">
+                <span className="hidden lg:block font-poppins text-[8px] uppercase tracking-[0.25em] text-[#D4AF37] font-semibold -mt-0.5 truncate">
                   Jaipur Heritage & Home
                 </span>
               </div>
             </Link>
 
-            {/* Desktop Navigation Menu (Mega Menu Support) */}
-            <nav className="hidden xl:flex items-center gap-5 xl:gap-7 font-poppins text-xs font-semibold text-[#1A1A1A] whitespace-nowrap flex-shrink-0">
+            {/* Desktop Navigation Menu (Mega Menu Support on xl+) */}
+            <nav className="hidden xl:flex items-center gap-4 xl:gap-6 font-poppins text-xs font-semibold text-[#1A1A1A] whitespace-nowrap flex-shrink-0">
               {/* Women's Ethnic Wear Mega Dropdown */}
               <div
                 className="relative py-7 group"
@@ -105,7 +106,7 @@ export const Navbar = () => {
               >
                 <button className="flex items-center gap-1 hover:text-[#6B1D2F] transition-colors uppercase tracking-wider text-xs font-semibold">
                   <span>Women&apos;s Suit Sets</span>
-                  <ChevronDown className="w-3.5 h-3.5 text-[#6B1D2F] transition-transform group-hover:rotate-180" />
+                  <ChevronDown className={`w-3.5 h-3.5 text-[#6B1D2F] transition-transform duration-200 ${activeMega === 'women' ? 'rotate-180' : ''}`} />
                 </button>
 
                 {activeMega === 'women' && (
@@ -258,19 +259,19 @@ export const Navbar = () => {
               </Link>
             </nav>
 
-            {/* Actions Bar (AI, Search, Wishlist, Cart, Login/User) */}
-            <div className="flex items-center gap-1.5 sm:gap-2 lg:gap-3 flex-shrink-0">
+            {/* Actions Bar (Search, Wishlist, Cart, Persistent Login/User CTA) */}
+            <div className="flex items-center gap-1 sm:gap-2 lg:gap-3 flex-shrink-0 min-w-0">
               {/* Ask AI Stylist Button (Desktop xl+) */}
               <button
                 onClick={() => setAiModalOpen(true)}
-                className="hidden xl:flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-[#D4AF37]/20 to-amber-100/40 border border-[#D4AF37] text-[#6B1D2F] rounded-full text-xs font-bold tracking-wide hover:bg-[#D4AF37] hover:text-[#1A1A1A] transition-all shadow-sm whitespace-nowrap flex-shrink-0"
+                className="hidden xl:flex items-center gap-1 px-2.5 py-1.5 bg-gradient-to-r from-[#D4AF37]/20 to-amber-100/40 border border-[#D4AF37] text-[#6B1D2F] rounded-full text-xs font-bold tracking-wide hover:bg-[#D4AF37] hover:text-[#1A1A1A] transition-all shadow-sm whitespace-nowrap flex-shrink-0"
               >
-                <Sparkles className="w-4 h-4 text-[#D4AF37]" />
-                <span>Ask AI Stylist</span>
+                <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
+                <span>AI Stylist</span>
               </button>
 
-              {/* Quick Search */}
-              <div className="relative hidden lg:block w-32 xl:w-44 2xl:w-56 flex-shrink">
+              {/* Quick Search (Desktop lg+) */}
+              <div className="relative hidden lg:block w-24 xl:w-36 2xl:w-48 flex-shrink">
                 <input
                   type="text"
                   value={searchQuery}
@@ -280,30 +281,30 @@ export const Navbar = () => {
                       window.location.href = `/shop?search=${encodeURIComponent(searchQuery)}`;
                     }
                   }}
-                  placeholder="Search products..."
-                  className="w-full bg-white/90 border border-[#E8E2D5] rounded-full py-1.5 pl-8 pr-3 text-xs font-poppins focus:outline-none focus:border-[#6B1D2F] shadow-inner text-[#1A1A1A] truncate"
+                  placeholder="Search..."
+                  className="w-full bg-white/90 border border-[#E8E2D5] rounded-full py-1 pl-7 pr-2.5 text-xs font-poppins focus:outline-none focus:border-[#6B1D2F] shadow-inner text-[#1A1A1A] truncate"
                 />
-                <Search className="w-3.5 h-3.5 text-[#666] absolute left-2.5 top-2.5 pointer-events-none" />
+                <Search className="w-3.5 h-3.5 text-[#666] absolute left-2.5 top-2 pointer-events-none" />
               </div>
 
-              {/* Mobile/Tablet Search Button */}
+              {/* Mobile/Tablet Search Button (< lg) */}
               <button
                 onClick={() => setMobileMenuOpen(true)}
-                className="p-1.5 sm:p-2 rounded-full hover:bg-black/5 transition-colors text-[#1A1A1A] lg:hidden"
-                aria-label="Search"
+                className="p-1.5 rounded-full hover:bg-black/5 transition-colors text-[#1A1A1A] lg:hidden flex-shrink-0"
+                aria-label="Search Catalog"
               >
-                <Search className="w-5 h-5" />
+                <Search className="w-4 h-4 sm:w-5 sm:h-5" />
               </button>
 
               {/* Wishlist Link */}
               <Link
                 href="/account?tab=wishlist"
-                className="relative p-1.5 sm:p-2 rounded-full hover:bg-black/5 transition-colors text-[#1A1A1A] hover:text-[#6B1D2F]"
+                className="relative p-1.5 rounded-full hover:bg-black/5 transition-colors text-[#1A1A1A] hover:text-[#6B1D2F] flex-shrink-0"
                 aria-label="Wishlist"
               >
-                <Heart className="w-5 h-5" />
+                <Heart className="w-4 h-4 sm:w-5 sm:h-5" />
                 {wishlist.length > 0 && (
-                  <span className="absolute top-0.5 right-0.5 sm:top-1 sm:right-1 w-3.5 h-3.5 sm:w-4 sm:h-4 bg-[#6B1D2F] text-[#FAF8F5] text-[9px] sm:text-[10px] font-bold rounded-full flex items-center justify-center shadow">
+                  <span className="absolute top-0.5 right-0.5 w-3.5 h-3.5 bg-[#6B1D2F] text-[#FAF8F5] text-[9px] font-bold rounded-full flex items-center justify-center shadow">
                     {wishlist.length}
                   </span>
                 )}
@@ -312,41 +313,44 @@ export const Navbar = () => {
               {/* Shopping Bag Trigger */}
               <button
                 onClick={() => setIsCartOpen(true)}
-                className="relative p-1.5 sm:p-2 rounded-full hover:bg-black/5 transition-colors text-[#1A1A1A] hover:text-[#6B1D2F]"
+                className="relative p-1.5 rounded-full hover:bg-black/5 transition-colors text-[#1A1A1A] hover:text-[#6B1D2F] flex-shrink-0"
                 aria-label="Shopping Bag"
               >
-                <ShoppingBag className="w-5 h-5" />
+                <ShoppingBag className="w-4 h-4 sm:w-5 sm:h-5" />
                 {totalCartCount > 0 && (
-                  <span className="absolute top-0.5 right-0.5 sm:top-1 sm:right-1 w-3.5 h-3.5 sm:w-4 sm:h-4 bg-[#D4AF37] text-[#1A1A1A] text-[9px] sm:text-[10px] font-bold rounded-full flex items-center justify-center shadow">
+                  <span className="absolute top-0.5 right-0.5 w-3.5 h-3.5 bg-[#D4AF37] text-[#1A1A1A] text-[9px] font-bold rounded-full flex items-center justify-center shadow">
                     {totalCartCount}
                   </span>
                 )}
               </button>
 
-              {/* Prominent Login/Sign-up or Logged-In User Pill */}
-              <div className="relative group flex-shrink-0">
+              {/* Prominent Login/Sign-up or Logged-In User Pill (Visible 100% Zoom on ALL Devices) */}
+              <div className="relative group flex-shrink-0 z-20">
                 {!user ? (
                   <Link
                     href="/account"
-                    className="inline-flex items-center gap-1.5 px-3 sm:px-4 py-1.5 rounded-full bg-[#6B1D2F] text-[#FAF8F5] hover:bg-[#4A121F] hover:shadow-md transition-all shadow text-xs font-bold whitespace-nowrap flex-shrink-0"
+                    className="inline-flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-[#6B1D2F] text-[#FAF8F5] hover:bg-[#4A121F] hover:shadow-md transition-all shadow text-[11px] sm:text-xs font-bold whitespace-nowrap flex-shrink-0 border border-[#D4AF37]/50"
                     aria-label="Login or Sign Up"
                   >
-                    <UserIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#D4AF37]" />
-                    <span className="font-poppins tracking-wide">Login / Sign Up</span>
+                    <UserIcon className="w-3.5 h-3.5 text-[#D4AF37] flex-shrink-0" />
+                    <span className="font-poppins tracking-wide block">
+                      <span className="xs:hidden sm:inline">Login / Sign Up</span>
+                      <span className="hidden xs:inline sm:hidden">Login</span>
+                    </span>
                   </Link>
                 ) : (
                   <Link
                     href="/account"
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#1A1A1A] text-[#D4AF37] hover:bg-[#6B1D2F] hover:text-white transition-all shadow text-xs font-bold whitespace-nowrap flex-shrink-0"
+                    className="inline-flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-[#1A1A1A] text-[#D4AF37] hover:bg-[#6B1D2F] hover:text-white transition-all shadow text-[11px] sm:text-xs font-bold whitespace-nowrap flex-shrink-0 border border-[#D4AF37]/40"
                     aria-label="Customer Account Sanctuary"
                   >
-                    <UserIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#D4AF37]" />
-                    <span className="font-poppins max-w-[80px] sm:max-w-[100px] truncate">{user.name.split(' ')[0]}</span>
+                    <UserIcon className="w-3.5 h-3.5 text-[#D4AF37] flex-shrink-0" />
+                    <span className="font-poppins max-w-[65px] sm:max-w-[90px] truncate">{user.name.split(' ')[0]}</span>
                   </Link>
                 )}
 
                 {user && (
-                  <div className="absolute right-0 top-full mt-1 w-48 bg-[#FAF8F5] border border-[#E8E2D5] rounded shadow-luxury py-2 hidden group-hover:block z-50">
+                  <div className="absolute right-0 top-full mt-1 w-48 bg-[#FAF8F5] border border-[#E8E2D5] rounded shadow-luxury py-2 hidden group-hover:block z-50 animate-fadeIn">
                     <div className="px-4 py-2 border-b border-[#E8E2D5] text-xs">
                       <p className="font-bold text-[#1A1A1A] truncate">{user.name}</p>
                       <p className="text-[10px] text-[#666] truncate">{user.email}</p>
