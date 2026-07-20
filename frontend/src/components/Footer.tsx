@@ -83,7 +83,7 @@ export const Footer = () => {
             <Link href="/" className="inline-flex items-center gap-3.5 group">
               <div className="bg-[#FAF8F5] p-1.5 rounded-lg shadow-sm">
                 <img
-                  src="/logo.png"
+                  src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/logo.png`}
                   alt="Jaypurloom Brand Logo"
                   className="h-12 sm:h-14 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
                 />

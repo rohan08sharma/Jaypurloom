@@ -80,7 +80,7 @@ export const Navbar = () => {
             {/* Brand Logo */}
             <Link href="/" className="flex items-center gap-3 group flex-shrink-0 py-1">
               <img
-                src="/logo.png"
+                src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/logo.png`}
                 alt="Jaypurloom Brand Logo"
                 className="h-12 sm:h-14 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
               />
@@ -398,7 +398,7 @@ export const Navbar = () => {
           <div className="relative w-80 bg-[#FAF8F5] h-full shadow-2xl z-10 flex flex-col p-6 overflow-y-auto">
             <div className="flex items-center justify-between border-b border-[#E8E2D5] pb-4 mb-4">
               <Link href="/" onClick={() => setMobileMenuOpen(false)} className="flex items-center gap-2">
-                <img src="/logo.png" alt="Jaypurloom Logo" className="h-10 w-auto object-contain" />
+                <img src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/logo.png`} alt="Jaypurloom Logo" className="h-10 w-auto object-contain" />
                 <span className="font-playfair text-lg font-bold text-[#6B1D2F] tracking-wide">JAYPURLOOM</span>
               </Link>
               <button onClick={() => setMobileMenuOpen(false)}>

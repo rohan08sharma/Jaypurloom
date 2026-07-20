@@ -7,6 +7,9 @@ const nextConfig = {
     basePath: '/Jaypurloom',
     assetPrefix: '/Jaypurloom/',
   }),
+  env: {
+    NEXT_PUBLIC_BASE_PATH: isGithubPages ? '/Jaypurloom' : '',
+  },
   eslint: {
     ignoreDuringBuilds: true,
   },
