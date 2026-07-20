@@ -23,6 +23,8 @@ const config: Config = {
       },
       fontFamily: {
         playfair: ['var(--font-playfair)', 'serif'],
+        cormorant: ['var(--font-cormorant)', 'serif'],
+        cinzel: ['var(--font-cinzel)', 'serif'],
         poppins: ['var(--font-poppins)', 'sans-serif'],
       },
       boxShadow: {

@@ -85,8 +85,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 <img src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/logo.png`} alt="Jaypurloom Logo" className="h-10 w-auto object-contain" />
               </div>
               <div>
-                <Link href="/" className="font-playfair text-xl font-bold tracking-widest text-[#D4AF37]">
-                  JAYPURLOOM
+                <Link href="/" className="font-playfair text-xl font-bold tracking-[0.01em] text-[#D4AF37]">
+                  Jaypurloom
                 </Link>
                 <span className="block text-[9px] uppercase tracking-[0.25em] text-[#E8E2D5] -mt-0.5">
                   Admin Portal Shell

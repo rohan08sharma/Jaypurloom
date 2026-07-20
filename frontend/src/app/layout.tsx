@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Playfair_Display, Poppins } from 'next/font/google';
+import { Playfair_Display, Poppins, Cormorant_Garamond, Cinzel } from 'next/font/google';
 import './globals.css';
 import { Providers } from '../context/Providers';
 import { AnnouncementBar } from '../components/AnnouncementBar';
@@ -11,6 +11,20 @@ import { WhatsAppChatButton } from '../components/WhatsAppChatButton';
 const playfair = Playfair_Display({
   subsets: ['latin'],
   variable: '--font-playfair',
+  display: 'swap',
+});
+
+const cormorant = Cormorant_Garamond({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-cormorant',
+  display: 'swap',
+});
+
+const cinzel = Cinzel({
+  subsets: ['latin'],
+  weight: ['400', '600', '700'],
+  variable: '--font-cinzel',
   display: 'swap',
 });
 
@@ -35,7 +49,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${playfair.variable} ${poppins.variable}`}>
+    <html lang="en" className={`${playfair.variable} ${cormorant.variable} ${cinzel.variable} ${poppins.variable}`}>
       <body className="min-h-screen flex flex-col bg-[#FAF8F5] overflow-x-hidden w-full max-w-full">
         <Providers>
           <AnnouncementBar />

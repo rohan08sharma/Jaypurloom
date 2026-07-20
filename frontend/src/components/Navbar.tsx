@@ -86,8 +86,8 @@ export const Navbar = () => {
                 className="h-10 sm:h-12 lg:h-14 w-auto object-contain flex-shrink-0 transition-transform duration-300 group-hover:scale-105"
               />
               <div className="flex flex-col items-start justify-center min-w-0">
-                <span className="font-playfair text-base sm:text-xl lg:text-2xl font-extrabold tracking-[0.08em] sm:tracking-[0.12em] text-[#6B1D2F] group-hover:text-[#4A121F] transition-colors truncate">
-                  JAYPURLOOM
+                <span className="font-playfair text-xl sm:text-2xl lg:text-3xl font-bold tracking-[0.01em] text-[#6B1D2F] group-hover:text-[#4A121F] transition-colors truncate">
+                  Jaypurloom
                 </span>
                 <span className="hidden sm:block font-poppins text-[8px] sm:text-[9px] uppercase tracking-[0.3em] text-[#D4AF37] font-semibold -mt-1 truncate">
                   Jaipur Heritage & Home

@@ -89,8 +89,8 @@ export const Footer = () => {
                 />
               </div>
               <div className="flex flex-col">
-                <span className="font-playfair text-2xl font-extrabold tracking-widest text-[#D4AF37]">
-                  JAYPURLOOM
+                <span className="font-playfair text-2xl sm:text-3xl font-bold tracking-[0.01em] text-[#D4AF37]">
+                  Jaypurloom
                 </span>
                 <span className="block font-poppins text-[8.5px] uppercase tracking-[0.28em] text-[#E8E2D5] -mt-0.5">
                   Women&apos;s Ethnic & Home Sanctuary
