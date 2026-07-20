@@ -59,8 +59,8 @@ export const Navbar = () => {
       >
         <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6 w-full">
           <div className="flex items-center justify-between h-16 sm:h-20 gap-1 sm:gap-2.5 xl:gap-3 2xl:gap-4 w-full min-w-0">
-            {/* Mobile/Tablet Menu Toggle & AI Stylist Button (< xl viewports) */}
-            <div className="flex items-center gap-1 sm:gap-2 xl:hidden flex-shrink-0">
+            {/* Mobile/Tablet Menu Toggle & AI Stylist Button (< 2xl viewports) */}
+            <div className="flex items-center gap-1 sm:gap-2 2xl:hidden flex-shrink-0">
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 className="p-1.5 sm:p-2 rounded text-[#1A1A1A] hover:bg-black/5 transition-colors flex-shrink-0"
@@ -96,8 +96,8 @@ export const Navbar = () => {
               </div>
             </Link>
 
-            {/* Desktop Navigation Menu (Mega Menu Support on xl+) */}
-            <nav className="hidden xl:flex items-center gap-3 xl:gap-3.5 2xl:gap-6 font-poppins text-[11px] 2xl:text-xs font-semibold text-[#1A1A1A] whitespace-nowrap flex-shrink-0">
+            {/* Desktop Navigation Menu (Mega Menu Support on 2xl+) */}
+            <nav className="hidden 2xl:flex items-center gap-5 font-poppins text-xs font-semibold text-[#1A1A1A] whitespace-nowrap flex-shrink-0">
               {/* Women's Ethnic Wear Mega Dropdown */}
               <div
                 className="relative py-7 group"
