@@ -180,78 +180,86 @@ export const Navbar = () => {
                         />
                       </div>
                       <p className="font-playfair text-xs font-bold text-[#6B1D2F]">Royal Maroon Zari Anarkali</p>
-                      <Link
-                        href="/product/royal-maroon-chanderi-silk-zari-anarkali-suit-set"
-                        className="mt-1 text-[11px] font-poppins font-bold bg-[#6B1D2F] text-[#FAF8F5] py-1 rounded hover:bg-[#4A121F]"
-                      >
-                        Shop Featured
-                      </Link>
-                    </div>
+                  <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${megaMenuOpen ? 'rotate-180' : ''}`} />
+                </button>
+
+                {/* Mega Menu Dropdown */}
+                {megaMenuOpen && (
+                  <div className="absolute top-full left-0 w-64 bg-[#FAF8F5] border border-[#E8E2D5] rounded shadow-luxury p-4 z-50 animate-fadeIn">
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-[#D4AF37] mb-2 border-b border-[#E8E2D5] pb-1">
+                      Explore By Craft
+                    </p>
+                    <ul className="space-y-2 text-xs">
+                      <li>
+                        <Link href="/shop?category=anarkali-suits" className="block hover:text-[#6B1D2F] transition-colors">
+                          Royal Anarkali Suits
+                        </Link>
+                      </li>
+                      <li>
+                        <Link href="/shop?category=cotton-suit-sets" className="block hover:text-[#6B1D2F] transition-colors">
+                          Sanganeri Cotton Sets
+                        </Link>
+                      </li>
+                      <li>
+                        <Link href="/shop?category=kurta-sets" className="block hover:text-[#6B1D2F] transition-colors">
+                          Kurta Sets & Palazzos
+                        </Link>
+                      </li>
+                    </ul>
                   </div>
                 )}
               </div>
 
-              {/* Home Furnishing Mega Dropdown */}
               <div
-                className="relative py-7 group"
-                onMouseEnter={() => setActiveMega('home')}
-                onMouseLeave={() => setActiveMega(null)}
+                className="relative group py-2"
+                onMouseEnter={() => setHomeFurnishingMenuOpen(true)}
+                onMouseLeave={() => setHomeFurnishingMenuOpen(false)}
               >
-                <button className="flex items-center gap-1 hover:text-[#6B1D2F] transition-colors uppercase tracking-wider text-xs font-semibold">
+                <button
+                  className="flex items-center gap-1 hover:text-[#6B1D2F] transition-colors py-1 uppercase tracking-wider font-semibold"
+                  aria-expanded={homeFurnishingMenuOpen}
+                >
                   <span>Home Furnishing</span>
-                  <ChevronDown className="w-3.5 h-3.5 text-[#6B1D2F] transition-transform group-hover:rotate-180" />
+                  <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${homeFurnishingMenuOpen ? 'rotate-180' : ''}`} />
                 </button>
 
-                {activeMega === 'home' && (
-                  <div className="absolute left-0 top-full w-[520px] bg-[#FAF8F5] border border-[#D4AF37]/40 shadow-2xl rounded-b-lg p-6 grid grid-cols-2 gap-6 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
-                    <div>
-                      <h5 className="font-playfair font-bold text-base text-[#6B1D2F] border-b border-[#E8E2D5] pb-2 mb-3">
-                        Pure Cotton Bedsheets
-                      </h5>
-                      <ul className="space-y-2.5 text-xs text-[#1A1A1A]">
-                        <li>
-                          <Link href="/shop?category=king-size-bedsheets" className="hover:text-[#6B1D2F] hover:underline block font-semibold">
-                            👑 King Size Bedsheets (108x108 in)
-                          </Link>
-                        </li>
-                        <li>
-                          <Link href="/shop?category=queen-size-bedsheets" className="hover:text-[#6B1D2F] hover:underline block font-semibold">
-                            🛏️ Queen Size Bedsheets (90x100 in)
-                          </Link>
-                        </li>
-                        <li>
-                          <Link href="/shop?category=home-furnishing" className="hover:text-[#6B1D2F] hover:underline block">
-                            Sanganeri Floral Jaal Sheets
-                          </Link>
-                        </li>
-                        <li>
-                          <Link href="/shop?category=home-furnishing" className="hover:text-[#6B1D2F] hover:underline block">
-                            Bagru Natural Indigo Bedsheets
-                          </Link>
-                        </li>
-                        <li>
-                          <Link href="/shop?category=home-furnishing" className="hover:text-[#6B1D2F] font-semibold text-[#6B1D2F] block pt-1">
-                            View All Home Furnishing &rarr;
-                          </Link>
-                        </li>
-                      </ul>
-                    </div>
+                {/* Home Furnishing Dropdown */}
+                {homeFurnishingMenuOpen && (
+                  <div className="absolute top-full left-0 w-72 bg-[#FAF8F5] border border-[#E8E2D5] rounded shadow-luxury p-4 z-50 animate-fadeIn">
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-[#D4AF37] mb-2 border-b border-[#E8E2D5] pb-1">
+                      Luxury Jaipur Bedding
+                    </p>
+                    <ul className="space-y-2.5 text-xs">
+                      <li>
+                        <Link href="/shop?category=king-size-bedsheets" className="block hover:text-[#6B1D2F] transition-colors font-medium">
+                          👑 King Size Bedsheets (300 TC Percale)
+                        </Link>
+                      </li>
+                      <li>
+                        <Link href="/shop?category=queen-size-bedsheets" className="block hover:text-[#6B1D2F] transition-colors font-medium">
+                          🛏️ Queen Size Bedsheets (Hand Block Print)
+                        </Link>
+                      </li>
+                    </ul>
 
-                    <div className="bg-amber-50/70 p-3.5 rounded border border-[#D4AF37]/30 flex flex-col justify-between text-center">
-                      <div className="aspect-[4/3] rounded overflow-hidden mb-2">
-                        <img
-                          src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=400&auto=format&fit=crop"
-                          alt="Maharaja Palace King Sheet"
-                          className="w-full h-full object-cover hover:scale-105 transition-transform"
-                        />
+                    {/* Featured Item Mini Card */}
+                    <div className="mt-3 pt-3 border-t border-[#E8E2D5]">
+                      <div className="bg-amber-50/70 p-3.5 rounded border border-[#D4AF37]/30 flex flex-col justify-between text-center">
+                        <div className="aspect-[4/3] rounded overflow-hidden mb-2">
+                          <img
+                            src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=400&auto=format&fit=crop"
+                            alt="Maharaja Palace King Sheet"
+                            className="w-full h-full object-cover hover:scale-105 transition-transform"
+                          />
+                        </div>
+                        <p className="font-playfair text-xs font-bold text-[#6B1D2F]">Maharaja Palace 300 TC Sheet</p>
+                        <Link
+                          href="/product/maharaja-palace-300-tc-king-size-percale-bedsheet"
+                          className="mt-1 text-[11px] font-poppins font-bold bg-[#6B1D2F] text-[#FAF8F5] py-1 rounded hover:bg-[#4A121F]"
+                        >
+                          Shop Bedsheet
+                        </Link>
                       </div>
-                      <p className="font-playfair text-xs font-bold text-[#6B1D2F]">Maharaja Palace 300 TC Sheet</p>
-                      <Link
-                        href="/product/maharaja-palace-300-tc-king-size-percale-bedsheet"
-                        className="mt-1 text-[11px] font-poppins font-bold bg-[#6B1D2F] text-[#FAF8F5] py-1 rounded hover:bg-[#4A121F]"
-                      >
-                        Shop Bedsheet
-                      </Link>
                     </div>
                   </div>
                 )}
@@ -272,8 +280,8 @@ export const Navbar = () => {
               </Link>
             </nav>
 
-            {/* Actions Bar (AI, Search, Wishlist, Cart, User) */}
-            <div className="flex items-center gap-1 sm:gap-3 lg:gap-4 flex-shrink-0">
+            {/* Actions Bar (AI, Search, Wishlist, Cart, Login/User) */}
+            <div className="flex items-center gap-1.5 sm:gap-2 lg:gap-3 flex-shrink-0">
               {/* Ask AI Stylist Button (Desktop xl+) */}
               <button
                 onClick={() => setAiModalOpen(true)}
@@ -284,7 +292,7 @@ export const Navbar = () => {
               </button>
 
               {/* Quick Search */}
-              <div className="relative hidden md:block w-36 lg:w-48 xl:w-56 flex-shrink">
+              <div className="relative hidden lg:block w-32 xl:w-44 2xl:w-56 flex-shrink">
                 <input
                   type="text"
                   value={searchQuery}
@@ -294,16 +302,16 @@ export const Navbar = () => {
                       window.location.href = `/shop?search=${encodeURIComponent(searchQuery)}`;
                     }
                   }}
-                  placeholder="Search Anarkali, Bedsheet..."
+                  placeholder="Search products..."
                   className="w-full bg-white/90 border border-[#E8E2D5] rounded-full py-1.5 pl-8 pr-3 text-xs font-poppins focus:outline-none focus:border-[#6B1D2F] shadow-inner text-[#1A1A1A] truncate"
                 />
                 <Search className="w-3.5 h-3.5 text-[#666] absolute left-2.5 top-2.5 pointer-events-none" />
               </div>
 
-              {/* Mobile Search Button */}
+              {/* Mobile/Tablet Search Button */}
               <button
                 onClick={() => setMobileMenuOpen(true)}
-                className="p-1.5 sm:p-2 rounded-full hover:bg-black/5 transition-colors text-[#1A1A1A] md:hidden"
+                className="p-1.5 sm:p-2 rounded-full hover:bg-black/5 transition-colors text-[#1A1A1A] lg:hidden"
                 aria-label="Search"
               >
                 <Search className="w-5 h-5" />
@@ -337,20 +345,27 @@ export const Navbar = () => {
                 )}
               </button>
 
-              {/* Account Dropdown or Login */}
-              <div className="relative group">
-                <Link
-                  href={user ? '/account' : '/account'}
-                  className="p-1.5 sm:p-2 rounded-full hover:bg-black/5 transition-colors text-[#1A1A1A] hover:text-[#6B1D2F] flex items-center gap-1.5"
-                  aria-label="Customer Account"
-                >
-                  <UserIcon className="w-5 h-5" />
-                  {user && (
-                    <span className="hidden sm:inline-block text-xs font-poppins font-semibold max-w-[80px] truncate">
-                      {user.name.split(' ')[0]}
-                    </span>
-                  )}
-                </Link>
+              {/* Prominent Login/Sign-up or Logged-In User Pill */}
+              <div className="relative group flex-shrink-0">
+                {!user ? (
+                  <Link
+                    href="/account"
+                    className="inline-flex items-center gap-1.5 px-3 sm:px-4 py-1.5 rounded-full bg-[#6B1D2F] text-[#FAF8F5] hover:bg-[#4A121F] hover:shadow-md transition-all shadow text-xs font-bold whitespace-nowrap flex-shrink-0"
+                    aria-label="Login or Sign Up"
+                  >
+                    <UserIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#D4AF37]" />
+                    <span className="font-poppins tracking-wide">Login / Sign Up</span>
+                  </Link>
+                ) : (
+                  <Link
+                    href="/account"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#1A1A1A] text-[#D4AF37] hover:bg-[#6B1D2F] hover:text-white transition-all shadow text-xs font-bold whitespace-nowrap flex-shrink-0"
+                    aria-label="Customer Account Sanctuary"
+                  >
+                    <UserIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#D4AF37]" />
+                    <span className="font-poppins max-w-[80px] sm:max-w-[100px] truncate">{user.name.split(' ')[0]}</span>
+                  </Link>
+                )}
 
                 {user && (
                   <div className="absolute right-0 top-full mt-1 w-48 bg-[#FAF8F5] border border-[#E8E2D5] rounded shadow-luxury py-2 hidden group-hover:block z-50">
@@ -409,11 +424,37 @@ export const Navbar = () => {
             <div className="flex items-center justify-between border-b border-[#E8E2D5] pb-4 mb-4">
               <Link href="/" onClick={() => setMobileMenuOpen(false)} className="flex items-center gap-2 min-w-0">
                 <img src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/logo.png`} alt="Jaypurloom Logo" className="h-8 sm:h-10 w-auto object-contain flex-shrink-0" />
-                <span className="font-playfair text-base sm:text-lg font-bold text-[#6B1D2F] tracking-wide truncate">JAYPURLOOM</span>
+                <span className="font-playfair text-lg sm:text-xl font-bold text-[#6B1D2F] tracking-[0.01em] truncate">Jaypurloom</span>
               </Link>
               <button onClick={() => setMobileMenuOpen(false)} className="p-1 flex-shrink-0">
                 <X className="w-6 h-6 text-[#1A1A1A]" />
               </button>
+            </div>
+
+            {/* Mobile/Tablet Prominent Login/Sign-Up CTA Button */}
+            <div className="mb-4">
+              {!user ? (
+                <Link
+                  href="/account"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-full py-2.5 px-4 bg-[#6B1D2F] text-[#FAF8F5] rounded-full flex items-center justify-center gap-2 font-poppins text-xs font-bold shadow-md hover:bg-[#4A121F] transition-colors"
+                >
+                  <UserIcon className="w-4 h-4 text-[#D4AF37]" />
+                  <span>Login / Sign Up Sanctuary</span>
+                </Link>
+              ) : (
+                <Link
+                  href="/account"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-full py-2.5 px-4 bg-[#1A1A1A] text-[#D4AF37] rounded-full flex items-center justify-between font-poppins text-xs font-bold shadow-md hover:bg-[#6B1D2F] hover:text-white transition-colors"
+                >
+                  <span className="flex items-center gap-2">
+                    <UserIcon className="w-4 h-4 text-[#D4AF37]" />
+                    <span>My Sanctuary ({user.name.split(' ')[0]})</span>
+                  </span>
+                  <span className="text-[10px] bg-white/10 px-2 py-0.5 rounded text-white">VIP Status</span>
+                </Link>
+              )}
             </div>
 
             {/* Mobile Search */}

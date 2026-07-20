@@ -16,6 +16,9 @@ import {
   CheckCircle2,
   ShieldCheck,
   Send,
+  Truck,
+  FileText,
+  X,
 } from 'lucide-react';
 import Link from 'next/link';
 import { useAuth } from '../../context/AuthContext';
@@ -39,6 +42,25 @@ function AccountContent() {
   ]);
   const [newAddressOpen, setNewAddressOpen] = useState(false);
   const [addrForm, setAddrForm] = useState({ fullName: '', phone: '', street: '', city: '', state: '', pincode: '' });
+
+  // Order Filtering & Modals State
+  const [orderFilterTab, setOrderFilterTab] = useState<'ALL' | 'PENDING' | 'IN_TRANSIT' | 'COMPLETED' | 'RETURNED'>('ALL');
+  const [trackingOrder, setTrackingOrder] = useState<any | null>(null);
+  const [invoiceOrder, setInvoiceOrder] = useState<any | null>(null);
+  const [returnOrder, setReturnOrder] = useState<any | null>(null);
+  const [returnReason, setReturnReason] = useState('Fabric defect / weaving flaw under 7-day guarantee');
+  const [returnComments, setReturnComments] = useState('');
+  const [returnRequests, setReturnRequests] = useState<any[]>([
+    {
+      id: 'ret-101',
+      orderNumber: 'JPL-99201',
+      itemTitle: 'Maharaja Palace 300 TC Percale Bedsheet',
+      reason: 'Fabric manufacturing defect under 7-Day Policy',
+      status: 'PICKUP SCHEDULED',
+      requestedAt: '2026-07-19',
+      refundAmount: 4499,
+    }
+  ]);
 
   // Auth Forms
   const [authMode, setAuthMode] = useState<'login' | 'register'>('login');
@@ -82,6 +104,24 @@ function AccountContent() {
       updateUserBalance((user.walletBalance || 0) + amount);
       showToast(`🎉 Successfully added ₹${amount} simulated credits to your Jaypurloom Royal Wallet!`, 'success');
     }
+  };
+
+  const handleDefectiveReturnSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!returnOrder) return;
+    const newReq = {
+      id: `ret-${Math.floor(Math.random() * 900 + 100)}`,
+      orderNumber: returnOrder.orderNumber || 'JPL-88192',
+      itemTitle: returnOrder.items?.[0]?.productTitle || 'Royal Suite Ensemble',
+      reason: `${returnReason}${returnComments ? ` (${returnComments})` : ''}`,
+      status: 'PICKUP SCHEDULED',
+      requestedAt: new Date().toISOString().split('T')[0],
+      refundAmount: returnOrder.totalAmount || 4499,
+    };
+    setReturnRequests((prev) => [newReq, ...prev]);
+    setReturnOrder(null);
+    setReturnComments('');
+    showToast('✅ 7-Day Defective Item Return Request Submitted! Doorstep courier pickup scheduled within 24 hours.', 'success');
   };
 
   // If NOT logged in
@@ -318,157 +358,366 @@ function AccountContent() {
 
           {activeTab === 'orders' && (
             <div className="space-y-6">
-              <h3 className="font-playfair text-xl font-bold text-[#1A1A1A] border-b border-[#E8E2D5] pb-3">
-                My Order History ({orders.length})
-              </h3>
-              {orders.length === 0 ? (
-                <div className="text-center py-12 space-y-3">
-                  <Package className="w-12 h-12 text-gray-300 mx-auto" />
-                  <p className="font-bold text-sm">No orders placed yet</p>
-                  <Link href="/shop" className="btn-primary inline-block text-xs">Start Shopping</Link>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#E8E2D5] pb-3">
+                <h3 className="font-playfair text-xl font-bold text-[#1A1A1A]">
+                  My Order History ({orders.length})
+                </h3>
+                {/* Order Filter Sub-Tabs */}
+                <div className="flex flex-wrap gap-1.5 text-[11px] font-bold">
+                  {(['ALL', 'PENDING', 'IN_TRANSIT', 'COMPLETED', 'RETURNED'] as const).map((tab) => (
+                    <button
+                      key={tab}
+                      onClick={() => setOrderFilterTab(tab)}
+                      className={`px-2.5 py-1 rounded transition-colors uppercase ${
+                        orderFilterTab === tab ? 'bg-[#6B1D2F] text-white shadow-xs' : 'bg-gray-100 text-[#666] hover:bg-gray-200'
+                      }`}
+                    >
+                      {tab === 'ALL' && 'All Orders'}
+                      {tab === 'PENDING' && 'Pending'}
+                      {tab === 'IN_TRANSIT' && 'In-Transit'}
+                      {tab === 'COMPLETED' && 'Delivered'}
+                      {tab === 'RETURNED' && 'Returns (7-Day)'}
+                    </button>
+                  ))}
                 </div>
-              ) : (
-                <div className="space-y-4">
-                  {orders.map((ord) => (
-                    <div key={ord.id} className="p-4 border border-[#E8E2D5] rounded bg-gray-50/50 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                      <div>
-                        <div className="flex items-center gap-2">
-                          <span className="font-playfair font-bold text-base text-[#1A1A1A]">#{ord.orderNumber}</span>
-                          <span className="bg-[#0D5C3A] text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase">{ord.status}</span>
+              </div>
+
+              {(() => {
+                const filteredOrders = orders.filter((o) => {
+                  if (orderFilterTab === 'ALL') return true;
+                  if (orderFilterTab === 'PENDING') return ['PLACED', 'PROCESSING'].includes(o.status);
+                  if (orderFilterTab === 'IN_TRANSIT') return o.status === 'SHIPPED';
+                  if (orderFilterTab === 'COMPLETED') return o.status === 'DELIVERED';
+                  if (orderFilterTab === 'RETURNED') return ['CANCELLED', 'RETURNED'].includes(o.status);
+                  return true;
+                });
+
+                if (filteredOrders.length === 0) {
+                  return (
+                    <div className="text-center py-12 space-y-3 bg-gray-50 rounded border border-[#E8E2D5]">
+                      <Package className="w-12 h-12 text-gray-300 mx-auto" />
+                      <p className="font-bold text-sm text-[#1A1A1A]">No orders found in this category</p>
+                      <Link href="/shop" className="btn-primary inline-block text-xs">Explore Royal Suite Collection</Link>
+                    </div>
+                  );
+                }
+
+                return (
+                  <div className="space-y-4">
+                    {filteredOrders.map((ord) => (
+                      <div key={ord.id} className="p-4 sm:p-5 border border-[#E8E2D5] rounded bg-gray-50/50 hover:bg-white hover:shadow-xs transition-all space-y-3">
+                        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-gray-200 pb-3">
+                          <div>
+                            <div className="flex items-center gap-2">
+                              <span className="font-playfair font-bold text-base text-[#1A1A1A]">#{ord.orderNumber}</span>
+                              <span className={`text-[10px] font-bold px-2 py-0.5 rounded uppercase ${
+                                ord.status === 'DELIVERED' ? 'bg-green-100 text-green-800' :
+                                ord.status === 'SHIPPED' ? 'bg-blue-100 text-blue-800' :
+                                'bg-amber-100 text-amber-800'
+                              }`}>
+                                {ord.status}
+                              </span>
+                            </div>
+                            <p className="text-[11px] text-[#666] mt-0.5">Placed on: {new Date(ord.createdAt || Date.now()).toLocaleDateString()}</p>
+                          </div>
+                          <span className="font-playfair font-bold text-lg text-[#6B1D2F]">₹{(ord.totalAmount || 4499).toLocaleString('en-IN')}</span>
                         </div>
-                        <p className="text-xs text-[#666] mt-1">Placed on: {new Date(ord.createdAt || Date.now()).toLocaleDateString()}</p>
-                        <p className="text-xs font-semibold text-[#1A1A1A] mt-1">
-                          Items: {ord.items?.map((i: any) => `${i.productTitle} (x${i.quantity})`).join(', ') || 'Royal Suite Ensemble'}
-                        </p>
+
+                        <div className="text-xs text-[#1A1A1A]">
+                          <p className="font-semibold">Items in Shipment:</p>
+                          <p className="text-[#666] mt-0.5">
+                            {ord.items?.map((i: any) => `${i.productTitle || 'Maharaja Suite'} (x${i.quantity || 1})`).join(', ') || 'Royal Suite Ensemble (300 TC Percale Bedsheet + Suit Set)'}
+                          </p>
+                        </div>
+
+                        {/* Customer Actions Bar */}
+                        <div className="pt-2 flex flex-wrap items-center gap-2 sm:gap-3 border-t border-gray-100">
+                          <button
+                            onClick={() => setTrackingOrder(ord)}
+                            className="px-3 py-1.5 bg-[#1A1A1A] text-[#D4AF37] rounded text-xs font-bold hover:bg-[#6B1D2F] hover:text-white transition-colors flex items-center gap-1.5"
+                          >
+                            <Truck className="w-3.5 h-3.5" /> Track Live Shipment
+                          </button>
+
+                          <button
+                            onClick={() => setInvoiceOrder(ord)}
+                            className="px-3 py-1.5 bg-white border border-[#E8E2D5] text-[#1A1A1A] rounded text-xs font-bold hover:bg-gray-100 transition-colors flex items-center gap-1.5"
+                          >
+                            <FileText className="w-3.5 h-3.5 text-[#6B1D2F]" /> Tax Invoice Copy
+                          </button>
+
+                          {(ord.status === 'DELIVERED' || ord.status === 'SHIPPED') && (
+                            <button
+                              onClick={() => setReturnOrder(ord)}
+                              className="px-3 py-1.5 bg-amber-50 border border-amber-300 text-amber-900 rounded text-xs font-bold hover:bg-amber-100 transition-colors flex items-center gap-1.5 ml-auto"
+                            >
+                              <RefreshCw className="w-3.5 h-3.5 text-amber-700" /> 7-Day Defective Return
+                            </button>
+                          )}
+                        </div>
                       </div>
-                      <div className="text-right flex flex-col items-end gap-2 w-full sm:w-auto">
-                        <span className="font-bold text-base text-[#6B1D2F]">₹{ord.totalAmount?.toLocaleString('en-IN') || '4,499'}</span>
-                        <Link href={`/order-success/${ord.id}`} className="text-xs font-bold text-[#1A1A1A] underline hover:text-[#6B1D2F]">
-                          Track Shipment &rarr;
-                        </Link>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
-
-          {activeTab === 'wallet' && (
-            <div className="space-y-6">
-              <h3 className="font-playfair text-xl font-bold text-[#1A1A1A] border-b border-[#E8E2D5] pb-3 flex items-center justify-between">
-                <span>Jaypurloom Royal Digital Wallet</span>
-                <span className="text-[#0D5C3A]">₹{user.walletBalance || 0} Available</span>
-              </h3>
-
-              <div className="bg-gradient-to-r from-[#1A1A1A] to-[#6B1D2F] text-white p-6 rounded-lg shadow-gold space-y-4">
-                <p className="text-xs uppercase tracking-widest text-[#D4AF37]">Digital Store Credit Card</p>
-                <div className="flex justify-between items-baseline">
-                  <h2 className="font-playfair text-4xl font-bold">₹{user.walletBalance || 0}</h2>
-                  <Sparkles className="w-6 h-6 text-[#D4AF37]" />
-                </div>
-                <p className="text-xs text-[#E8E2D5]">Instant checkout available across all suit sets and 300 TC bedsheets.</p>
-
-                <div className="pt-3 border-t border-white/20 flex gap-3">
-                  <button
-                    onClick={() => handleTopUpWallet(500)}
-                    className="px-4 py-2 bg-[#D4AF37] text-[#1A1A1A] rounded font-bold text-xs hover:brightness-110 shadow"
-                  >
-                    + Add ₹500
-                  </button>
-                  <button
-                    onClick={() => handleTopUpWallet(1000)}
-                    className="px-4 py-2 bg-[#D4AF37] text-[#1A1A1A] rounded font-bold text-xs hover:brightness-110 shadow"
-                  >
-                    + Add ₹1,000
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {activeTab === 'addresses' && (
-            <div className="space-y-6">
-              <div className="flex items-center justify-between border-b border-[#E8E2D5] pb-3">
-                <h3 className="font-playfair text-xl font-bold text-[#1A1A1A]">Saved Sanctuary Addresses</h3>
-                <button onClick={() => setNewAddressOpen(true)} className="btn-primary !py-1.5 !px-3 text-xs flex items-center gap-1">
-                  <Plus className="w-3.5 h-3.5" /> Add New
-                </button>
-              </div>
-
-              {newAddressOpen && (
-                <form onSubmit={handleAddAddress} className="bg-gray-50 p-4 rounded border border-[#E8E2D5] space-y-3 text-xs">
-                  <h4 className="font-bold">New Delivery Address</h4>
-                  <div className="grid grid-cols-2 gap-2">
-                    <input type="text" placeholder="Full Name" required value={addrForm.fullName} onChange={(e) => setAddrForm({...addrForm, fullName: e.target.value})} className="border p-2 rounded" />
-                    <input type="text" placeholder="Phone Number" required value={addrForm.phone} onChange={(e) => setAddrForm({...addrForm, phone: e.target.value})} className="border p-2 rounded" />
+                    ))}
                   </div>
-                  <input type="text" placeholder="Street, Apartment" required value={addrForm.street} onChange={(e) => setAddrForm({...addrForm, street: e.target.value})} className="w-full border p-2 rounded" />
-                  <div className="grid grid-cols-3 gap-2">
-                    <input type="text" placeholder="City" required value={addrForm.city} onChange={(e) => setAddrForm({...addrForm, city: e.target.value})} className="border p-2 rounded" />
-                    <input type="text" placeholder="State" required value={addrForm.state} onChange={(e) => setAddrForm({...addrForm, state: e.target.value})} className="border p-2 rounded" />
-                    <input type="text" placeholder="PIN" required value={addrForm.pincode} onChange={(e) => setAddrForm({...addrForm, pincode: e.target.value})} className="border p-2 rounded" />
-                  </div>
-                  <div className="flex justify-end gap-2 pt-2">
-                    <button type="button" onClick={() => setNewAddressOpen(false)} className="btn-secondary !py-1.5 !px-3 text-xs">Cancel</button>
-                    <button type="submit" className="btn-primary !py-1.5 !px-3 text-xs">Save Address</button>
-                  </div>
-                </form>
-              )}
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {addresses.map((addr) => (
-                  <div key={addr.id} className="p-4 border border-[#E8E2D5] rounded space-y-2 relative">
-                    {addr.isDefault && <span className="bg-[#6B1D2F] text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase">Default</span>}
-                    <p className="font-bold text-sm text-[#1A1A1A]">{addr.fullName} ({addr.phone})</p>
-                    <p className="text-xs text-[#666]">{addr.street}, {addr.city}, {addr.state} - {addr.pincode}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {activeTab === 'wishlist' && (
-            <div className="space-y-6">
-              <h3 className="font-playfair text-xl font-bold text-[#1A1A1A] border-b border-[#E8E2D5] pb-3">
-                My Royal Wishlist ({wishlist.length})
-              </h3>
-              {wishlist.length === 0 ? (
-                <div className="text-center py-12 space-y-3">
-                  <Heart className="w-12 h-12 text-gray-300 mx-auto" />
-                  <p className="font-bold text-sm">No creations saved right now</p>
-                  <Link href="/shop" className="btn-primary inline-block text-xs">Explore Pieces</Link>
-                </div>
-              ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                  {wishlist.map((item) => (
-                    <div key={item.id} className="border border-[#E8E2D5] rounded overflow-hidden p-3 bg-gray-50 flex flex-col justify-between">
-                      <div>
-                        <img src={item.image} alt={item.title} className="w-full h-40 object-cover rounded mb-2" />
-                        <h5 className="font-playfair font-bold text-xs line-clamp-1">{item.title}</h5>
-                        <p className="text-xs font-bold text-[#6B1D2F] mt-1">₹{item.price.toLocaleString('en-IN')}</p>
-                      </div>
-                      <div className="flex justify-between items-center pt-3 mt-2 border-t border-gray-200">
-                        <Link href={`/product/${item.slug}`} className="text-xs font-bold underline text-[#1A1A1A]">View Details</Link>
-                        <button onClick={() => toggleWishlist(item)} className="text-red-500 hover:text-red-700 text-xs font-semibold">Remove</button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
+                );
+              })()}
             </div>
           )}
 
           {activeTab === 'returns' && (
             <div className="space-y-6">
-              <h3 className="font-playfair text-xl font-bold text-[#1A1A1A] border-b border-[#E8E2D5] pb-3">
-                Returns & Exchange Requests
-              </h3>
-              <p className="text-xs text-[#666]">No active exchange or return requests found. We offer 7-day hassle-free doorstep returns across India.</p>
+              <div className="border-b border-[#E8E2D5] pb-3">
+                <h3 className="font-playfair text-xl font-bold text-[#1A1A1A]">
+                  Returns & Exchange Requests (7-Day Policy)
+                </h3>
+                <p className="text-xs text-[#666] mt-1">
+                  We guarantee hassle-free doorstep returns across India within 7 days for any defective or damaged items.
+                </p>
+              </div>
+
+              {returnRequests.length === 0 ? (
+                <div className="text-center py-12 bg-gray-50 rounded border border-[#E8E2D5] space-y-2">
+                  <RefreshCw className="w-10 h-10 text-gray-300 mx-auto" />
+                  <p className="text-xs font-bold text-[#1A1A1A]">No active return or exchange requests found.</p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {returnRequests.map((ret) => (
+                    <div key={ret.id} className="p-4 border border-[#E8E2D5] rounded bg-white shadow-xs space-y-2">
+                      <div className="flex justify-between items-center border-b pb-2">
+                        <span className="font-bold text-xs text-[#1A1A1A]">Return Request #{ret.id.toUpperCase()}</span>
+                        <span className="bg-amber-100 text-amber-800 font-bold text-[10px] px-2 py-0.5 rounded uppercase">{ret.status}</span>
+                      </div>
+                      <p className="text-xs font-semibold text-[#6B1D2F]">{ret.itemTitle}</p>
+                      <p className="text-xs text-[#666]"><strong>Order Number:</strong> #{ret.orderNumber}</p>
+                      <p className="text-xs text-[#666]"><strong>Defect Reason:</strong> {ret.reason}</p>
+                      <p className="text-xs text-[#666]"><strong>Requested Date:</strong> {ret.requestedAt}</p>
+                      <p className="text-xs text-[#0D5C3A] font-bold pt-1">Estimated Refund: ₹{ret.refundAmount?.toLocaleString('en-IN')} (to Jaypurloom Wallet within 24 hrs of pickup)</p>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           )}
         </div>
       </div>
+
+      {/* Live Tracking Modal */}
+      {trackingOrder && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4 animate-fadeIn">
+          <div className="bg-[#FAF8F5] border-2 border-[#D4AF37] rounded-lg max-w-lg w-full p-6 shadow-2xl relative space-y-5">
+            <button
+              onClick={() => setTrackingOrder(null)}
+              className="absolute top-4 right-4 text-gray-400 hover:text-[#1A1A1A] p-1"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="border-b border-[#E8E2D5] pb-3">
+              <span className="text-[10px] uppercase font-bold tracking-widest text-[#D4AF37]">Jaypurloom Royal Courier Tracking</span>
+              <h4 className="font-playfair text-xl font-bold text-[#1A1A1A]">Order #{trackingOrder.orderNumber}</h4>
+              <p className="text-xs text-[#666]">Carrier: <strong className="text-[#1A1A1A]">{trackingOrder.carrier || 'Delhivery Express Sanctuary'}</strong> | AWB: <strong className="text-[#6B1D2F]">{trackingOrder.trackingNumber || `AWB-${Math.floor(Math.random() * 899999 + 100000)}`}</strong></p>
+            </div>
+
+            <div className="space-y-4 py-2">
+              <div className="flex items-start gap-3">
+                <div className="w-6 h-6 rounded-full bg-green-600 text-white flex items-center justify-center flex-shrink-0 mt-0.5 text-xs font-bold">✓</div>
+                <div>
+                  <p className="text-xs font-bold text-[#1A1A1A]">Order Placed & Verified</p>
+                  <p className="text-[10px] text-gray-400">Weaving sanctuary confirmed order receipt</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <div className="w-6 h-6 rounded-full bg-green-600 text-white flex items-center justify-center flex-shrink-0 mt-0.5 text-xs font-bold">✓</div>
+                <div>
+                  <p className="text-xs font-bold text-[#1A1A1A]">Quality Check & Packaging</p>
+                  <p className="text-[10px] text-gray-400">Hand-checked for perfection in Jaipur workshop</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <div className={`w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 text-xs font-bold ${trackingOrder.status === 'SHIPPED' || trackingOrder.status === 'DELIVERED' ? 'bg-green-600 text-white' : 'bg-gray-300 text-gray-600'}`}>
+                  {trackingOrder.status === 'SHIPPED' || trackingOrder.status === 'DELIVERED' ? '✓' : '3'}
+                </div>
+                <div>
+                  <p className="text-xs font-bold text-[#1A1A1A]">In-Transit with Courier Partner</p>
+                  <p className="text-[10px] text-gray-400">Dispatched from Jaipur logistics facility</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <div className={`w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 text-xs font-bold ${trackingOrder.status === 'DELIVERED' ? 'bg-green-600 text-white' : 'bg-gray-300 text-gray-600'}`}>
+                  {trackingOrder.status === 'DELIVERED' ? '✓' : '4'}
+                </div>
+                <div>
+                  <p className="text-xs font-bold text-[#1A1A1A]">Delivered to Customer Sanctuary</p>
+                  <p className="text-[10px] text-gray-400">Successfully delivered to delivery address</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="pt-3 border-t border-[#E8E2D5] flex justify-end">
+              <button onClick={() => setTrackingOrder(null)} className="btn-primary !py-2 !px-5 text-xs font-bold">
+                Close Tracking
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Tax Invoice Modal */}
+      {invoiceOrder && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4 animate-fadeIn">
+          <div className="bg-white border border-[#E8E2D5] rounded-lg max-w-xl w-full p-6 shadow-2xl relative space-y-4 max-h-[90vh] overflow-y-auto font-poppins">
+            <button
+              onClick={() => setInvoiceOrder(null)}
+              className="absolute top-4 right-4 text-gray-400 hover:text-[#1A1A1A] p-1"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="flex justify-between items-start border-b border-[#E8E2D5] pb-4">
+              <div>
+                <h2 className="font-playfair text-2xl font-bold text-[#6B1D2F]">Jaypurloom</h2>
+                <p className="text-[10px] text-[#666]">Royal Heritage Textiles | Jaipur, Rajasthan</p>
+                <p className="text-[10px] text-[#666]">GSTIN: 08AABCJ1234D1Z2</p>
+              </div>
+              <div className="text-right">
+                <span className="bg-green-100 text-green-800 font-bold text-xs px-2.5 py-1 rounded uppercase">PAID TAX INVOICE</span>
+                <p className="text-xs font-bold text-[#1A1A1A] mt-1">Invoice #{invoiceOrder.orderNumber}</p>
+                <p className="text-[10px] text-[#666]">Date: {new Date(invoiceOrder.createdAt || Date.now()).toLocaleDateString()}</p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4 text-xs bg-gray-50 p-3 rounded border">
+              <div>
+                <p className="text-gray-400 text-[10px] uppercase font-bold">Billed To:</p>
+                <p className="font-bold text-[#1A1A1A]">{user.name}</p>
+                <p className="text-[#666]">{user.email}</p>
+                <p className="text-[#666]">{invoiceOrder.shippingAddress || 'Jaipur Sanctuary Address'}</p>
+              </div>
+              <div>
+                <p className="text-gray-400 text-[10px] uppercase font-bold">Payment Summary:</p>
+                <p className="font-bold text-[#1A1A1A]">Method: {invoiceOrder.paymentMethod || 'Razorpay Online'}</p>
+                <p className="text-[#666]">Status: Received & Verified</p>
+                <p className="text-[#666]">Dispatch: Jaipur Hub</p>
+              </div>
+            </div>
+
+            <table className="w-full text-left border-collapse text-xs">
+              <thead>
+                <tr className="bg-[#1A1A1A] text-white">
+                  <th className="p-2 border">Item Description</th>
+                  <th className="p-2 border text-center">Qty</th>
+                  <th className="p-2 border text-right">Price</th>
+                  <th className="p-2 border text-right">Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                {invoiceOrder.items?.map((item: any, idx: number) => (
+                  <tr key={idx} className="border-b">
+                    <td className="p-2 font-semibold">{item.productTitle || 'Maharaja Suite Ensemble'}</td>
+                    <td className="p-2 text-center">{item.quantity || 1}</td>
+                    <td className="p-2 text-right">₹{(item.price || invoiceOrder.totalAmount || 4499).toLocaleString('en-IN')}</td>
+                    <td className="p-2 text-right font-bold">₹{((item.price || invoiceOrder.totalAmount || 4499) * (item.quantity || 1)).toLocaleString('en-IN')}</td>
+                  </tr>
+                )) || (
+                  <tr className="border-b">
+                    <td className="p-2 font-semibold">Royal Suite Ensemble (300 TC Bedsheet + Anarkali Set)</td>
+                    <td className="p-2 text-center">1</td>
+                    <td className="p-2 text-right">₹{(invoiceOrder.totalAmount || 4499).toLocaleString('en-IN')}</td>
+                    <td className="p-2 text-right font-bold">₹{(invoiceOrder.totalAmount || 4499).toLocaleString('en-IN')}</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+
+            <div className="flex justify-between items-center text-xs pt-2 font-bold text-[#1A1A1A]">
+              <span>Inclusive of 12% GST on Textile Creations</span>
+              <span className="text-base text-[#6B1D2F]">Grand Total: ₹{(invoiceOrder.totalAmount || 4499).toLocaleString('en-IN')}</span>
+            </div>
+
+            <div className="pt-4 border-t border-[#E8E2D5] flex justify-end gap-3">
+              <button
+                onClick={() => {
+                  window.print();
+                }}
+                className="btn-secondary !py-2 !px-4 text-xs font-bold flex items-center gap-1.5"
+              >
+                <FileText className="w-4 h-4" /> Print / Download PDF
+              </button>
+              <button onClick={() => setInvoiceOrder(null)} className="btn-primary !py-2 !px-5 text-xs font-bold">
+                Done
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 7-Day Defective Item Return Modal */}
+      {returnOrder && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4 animate-fadeIn">
+          <div className="bg-[#FAF8F5] border-2 border-[#D4AF37] rounded-lg max-w-lg w-full p-6 shadow-2xl relative space-y-4">
+            <button
+              onClick={() => setReturnOrder(null)}
+              className="absolute top-4 right-4 text-gray-400 hover:text-[#1A1A1A] p-1"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="border-b border-[#E8E2D5] pb-3">
+              <span className="bg-[#6B1D2F] text-white font-bold text-[10px] px-2 py-0.5 rounded uppercase">7-Day Guarantee Policy</span>
+              <h4 className="font-playfair text-xl font-bold text-[#1A1A1A] mt-1.5">Initiate Defective Item Return</h4>
+              <p className="text-xs text-[#666]">Order #{returnOrder.orderNumber} | 100% Refund upon verification</p>
+            </div>
+
+            <form onSubmit={handleDefectiveReturnSubmit} className="space-y-4 text-xs">
+              <div className="space-y-1.5">
+                <label className="font-bold text-[#1A1A1A]">Select Defect Category (7-Day Policy)</label>
+                <select
+                  value={returnReason}
+                  onChange={(e) => setReturnReason(e.target.value)}
+                  className="w-full border border-[#E8E2D5] rounded p-2.5 bg-white font-semibold focus:outline-none focus:border-[#6B1D2F]"
+                >
+                  <option value="Fabric defect / weaving flaw under 7-day guarantee">Fabric defect / weaving flaw under 7-day guarantee</option>
+                  <option value="Damage during courier transit / package torn">Damage during courier transit / package torn</option>
+                  <option value="Incorrect size received or print variance">Incorrect size received or print variance</option>
+                  <option value="Defective stitching or missing embellishment">Defective stitching or missing embellishment</option>
+                </select>
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="font-bold text-[#1A1A1A]">Additional Notes / Description</label>
+                <textarea
+                  value={returnComments}
+                  onChange={(e) => setReturnComments(e.target.value)}
+                  placeholder="Describe the defect in brief so our Jaipur QC team can inspect..."
+                  rows={3}
+                  className="w-full border border-[#E8E2D5] rounded p-2.5 bg-white focus:outline-none focus:border-[#6B1D2F]"
+                />
+              </div>
+
+              <div className="bg-amber-50 border border-amber-200 p-3 rounded text-[11px] text-amber-900 space-y-1">
+                <p className="font-bold flex items-center gap-1">🛡️ Doorstep Pickup Guarantee</p>
+                <p>Our courier partner will collect the item directly from your delivery address within 24–48 hours at zero cost.</p>
+              </div>
+
+              <div className="flex justify-end gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setReturnOrder(null)}
+                  className="btn-secondary !py-2 !px-4 text-xs font-bold"
+                >
+                  Cancel
+                </button>
+                <button type="submit" className="btn-gold !py-2 !px-5 text-xs font-bold shadow">
+                  Submit 7-Day Return Request
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
